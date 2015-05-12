@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pe.com.b2c.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-/**
- *
- * @author Jose
- */
 public class SystemUtil {
+    
     //Constructor privado para que nadie pueda instanciar la clase
     private SystemUtil(){
         
