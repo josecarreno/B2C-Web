@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.com.b2c.dao;
+package pe.com.b2c.dao.hibernate.impl;
 
 /**
  *
- * @author Jose
+ * @author Renato
  */
-public class Temp {
+public class TipoTransaccionHibernateDao {
     
 }
