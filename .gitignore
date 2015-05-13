@@ -12,3 +12,4 @@
 hs_err_pid*
 /B2CService/target/
 /B2CWS/target/
+/B2CDao/src/test/
