@@ -12,6 +12,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,17 +30,21 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "tipotransaccion")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Tipotransaccion.findAll", query = "SELECT t FROM Tipotransaccion t"),
-    @NamedQuery(name = "Tipotransaccion.findByIdtipotransaccion", query = "SELECT t FROM Tipotransaccion t WHERE t.idtipotransaccion = :idtipotransaccion"),
-    @NamedQuery(name = "Tipotransaccion.findByDescripcion", query = "SELECT t FROM Tipotransaccion t WHERE t.descripcion = :descripcion")})
+    @NamedQuery(name = "TipoTransaccion.findAll", query = "SELECT t FROM TipoTransaccion t"),
+    @NamedQuery(name = "TipoTransaccion.findByIdtipotransaccion", query = "SELECT t FROM TipoTransaccion t WHERE t.idtipotransaccion = :idtipotransaccion"),
+    @NamedQuery(name = "TipoTransaccion.findByDescripcion", query = "SELECT t FROM TipoTransaccion t WHERE t.descripcion = :descripcion"),
+    @NamedQuery(name = "TipoTransaccion.findByEliminado", query = "SELECT t FROM TipoTransaccion t WHERE t.eliminado = :eliminado")})
 public class TipoTransaccion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idtipotransaccion")
     private Integer idtipotransaccion;
     @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "eliminado")
+    private Boolean eliminado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoTransaccion", fetch = FetchType.EAGER)
     private List<Inmueble> inmuebleList;
 
@@ -63,6 +69,14 @@ public class TipoTransaccion implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
     }
 
     @XmlTransient
@@ -96,7 +110,7 @@ public class TipoTransaccion implements Serializable {
 
     @Override
     public String toString() {
-        return "pe.com.b2c.dao.entity.Tipotransaccion[ idtipotransaccion=" + idtipotransaccion + " ]";
+        return "pe.com.b2c.dao.entity.TipoTransaccion[ idtipotransaccion=" + idtipotransaccion + " ]";
     }
     
 }

@@ -12,6 +12,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -28,17 +30,21 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "tipousuario")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Tipousuario.findAll", query = "SELECT t FROM Tipousuario t"),
-    @NamedQuery(name = "Tipousuario.findByIdTipoUsuario", query = "SELECT t FROM Tipousuario t WHERE t.idTipoUsuario = :idTipoUsuario"),
-    @NamedQuery(name = "Tipousuario.findByDescripcion", query = "SELECT t FROM Tipousuario t WHERE t.descripcion = :descripcion")})
+    @NamedQuery(name = "TipoUsuario.findAll", query = "SELECT t FROM TipoUsuario t"),
+    @NamedQuery(name = "TipoUsuario.findByIdTipoUsuario", query = "SELECT t FROM TipoUsuario t WHERE t.idTipoUsuario = :idTipoUsuario"),
+    @NamedQuery(name = "TipoUsuario.findByDescripcion", query = "SELECT t FROM TipoUsuario t WHERE t.descripcion = :descripcion"),
+    @NamedQuery(name = "TipoUsuario.findByEliminado", query = "SELECT t FROM TipoUsuario t WHERE t.eliminado = :eliminado")})
 public class TipoUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idTipoUsuario")
     private Integer idTipoUsuario;
     @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "eliminado")
+    private Boolean eliminado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoUsuario", fetch = FetchType.EAGER)
     private List<Usuario> usuarioList;
 
@@ -63,6 +69,14 @@ public class TipoUsuario implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
     }
 
     @XmlTransient
@@ -96,7 +110,7 @@ public class TipoUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "pe.com.b2c.dao.entity.Tipousuario[ idTipoUsuario=" + idTipoUsuario + " ]";
+        return "pe.com.b2c.dao.entity.TipoUsuario[ idTipoUsuario=" + idTipoUsuario + " ]";
     }
     
 }

@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -36,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Favoritos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idFavoritos")
     private Integer idFavoritos;
@@ -43,7 +46,7 @@ public class Favoritos implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     @Column(name = "eliminado")
-    private String eliminado;
+    private Boolean eliminado;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario idUsuario;
@@ -74,11 +77,11 @@ public class Favoritos implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public String getEliminado() {
+    public Boolean getEliminado() {
         return eliminado;
     }
 
-    public void setEliminado(String eliminado) {
+    public void setEliminado(Boolean eliminado) {
         this.eliminado = eliminado;
     }
 

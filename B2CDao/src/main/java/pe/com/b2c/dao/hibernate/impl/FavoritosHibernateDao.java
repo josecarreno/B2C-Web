@@ -8,8 +8,8 @@ package pe.com.b2c.dao.hibernate.impl;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import pe.com.b2c.dao.TipoUsuarioDao;
-import pe.com.b2c.dao.entity.TipoUsuario;
+import pe.com.b2c.dao.FavoritosDao;
+import pe.com.b2c.dao.entity.Favoritos;
 import pe.com.b2c.dao.hibernate.base.BaseHibernateDao;
 import pe.com.b2c.util.SystemException;
 
@@ -17,29 +17,30 @@ import pe.com.b2c.util.SystemException;
  *
  * @author Renato
  */
-public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsuarioDao{
+public class FavoritosHibernateDao extends BaseHibernateDao implements FavoritosDao{
 
     //Inicio Singleton
-    private static final TipoUsuarioHibernateDao TIPOUSUARIO_HIBERNATE_DAO;
+    private static final FavoritosHibernateDao FAVORITOS_HIBERNATE_DAO;
 
     static {
-        TIPOUSUARIO_HIBERNATE_DAO = new TipoUsuarioHibernateDao();
+        FAVORITOS_HIBERNATE_DAO = new FavoritosHibernateDao();
     }
 
-    private TipoUsuarioHibernateDao() {
+    private FavoritosHibernateDao() {
 
     }
 
-    public static TipoUsuarioHibernateDao obtenerInstancia() {
-        return TIPOUSUARIO_HIBERNATE_DAO;
+    public static FavoritosHibernateDao obtenerInstancia() {
+        return FAVORITOS_HIBERNATE_DAO;
     }
     //Fin Singleton
     
     @Override
-    public void insertar(TipoUsuario e) throws SystemException {
-        Session session = null;
+    public void insertar(Favoritos e) throws SystemException {
+         Session session = null;
         try {
             session = obtenerSesion();
+            e.setEliminado(Boolean.FALSE);
             session.save(e);
             session.getTransaction().commit();
         } finally {
@@ -51,11 +52,12 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
     }
 
     @Override
-    public void actualizar(TipoUsuario e) throws SystemException {
+    public void actualizar(Favoritos e) throws SystemException {
         Session session = null;
         try {
             session = obtenerSesion();
             session.update(e);
+            e.setEliminado(Boolean.FALSE);
             session.getTransaction().commit();
         } finally {
             if(session!=null && session.isOpen()){
@@ -69,9 +71,9 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
         Session session = null;
         try {
             session = obtenerSesion();
-            TipoUsuario tipoUsuario = (TipoUsuario) session.get(TipoUsuario.class, id);
-            tipoUsuario.setEliminado(Boolean.TRUE);
-            session.update(tipoUsuario);
+            Favoritos favoritos = (Favoritos) session.get(Favoritos.class, id);
+            favoritos.setEliminado(Boolean.TRUE);
+            session.update(favoritos);
             session.getTransaction().commit();
         } finally {
             if(session!=null && session.isOpen()){
@@ -81,27 +83,27 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
     }
 
     @Override
-    public TipoUsuario obtener(Integer id) throws SystemException {
+    public Favoritos obtener(Integer id) throws SystemException {
         Session session = null;
-        TipoUsuario tipoUsuario = null;
+        Favoritos favoritos = null;
         try {
             session = obtenerSesion();
-            tipoUsuario = (TipoUsuario) session.get(TipoUsuario.class, id);
+            favoritos = (Favoritos) session.get(Favoritos.class, id);
         } finally {
             if(session!=null && session.isOpen()){
                 cerrar(session);
             }
         }
-        return tipoUsuario;
+        return favoritos;
     }
 
     @Override
-    public List<TipoUsuario> listar() throws SystemException {
-         Session session = null;
-        List<TipoUsuario> lista = null;
+    public List<Favoritos> listar() throws SystemException {
+        Session session = null;
+        List<Favoritos> lista = null;
         try {
             session = obtenerSesion();
-            String hql = "SELECT * FROM tipousuario tu WHERE tu.eliminado = 0";
+            String hql = "SELECT f FROM favoritos WHERE f.eliminado = 0";
             Query query = session.createQuery(hql);
             lista = query.list();
         } finally {

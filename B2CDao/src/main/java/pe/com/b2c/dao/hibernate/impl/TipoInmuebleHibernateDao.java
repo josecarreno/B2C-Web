@@ -8,8 +8,9 @@ package pe.com.b2c.dao.hibernate.impl;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import pe.com.b2c.dao.TipoUsuarioDao;
-import pe.com.b2c.dao.entity.TipoUsuario;
+import pe.com.b2c.dao.TipoInmuebleDao;
+import pe.com.b2c.dao.entity.Inmueble;
+import pe.com.b2c.dao.entity.TipoInmueble;
 import pe.com.b2c.dao.hibernate.base.BaseHibernateDao;
 import pe.com.b2c.util.SystemException;
 
@@ -17,26 +18,26 @@ import pe.com.b2c.util.SystemException;
  *
  * @author Renato
  */
-public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsuarioDao{
+public class TipoInmuebleHibernateDao extends BaseHibernateDao implements TipoInmuebleDao{
 
     //Inicio Singleton
-    private static final TipoUsuarioHibernateDao TIPOUSUARIO_HIBERNATE_DAO;
+    private static final TipoInmuebleHibernateDao TIPOINMUEBLE_HIBERNATE_DAO;
 
     static {
-        TIPOUSUARIO_HIBERNATE_DAO = new TipoUsuarioHibernateDao();
+        TIPOINMUEBLE_HIBERNATE_DAO = new TipoInmuebleHibernateDao();
     }
 
-    private TipoUsuarioHibernateDao() {
+    private TipoInmuebleHibernateDao() {
 
     }
 
-    public static TipoUsuarioHibernateDao obtenerInstancia() {
-        return TIPOUSUARIO_HIBERNATE_DAO;
+    public static TipoInmuebleHibernateDao obtenerInstancia() {
+        return TIPOINMUEBLE_HIBERNATE_DAO;
     }
     //Fin Singleton
-    
+
     @Override
-    public void insertar(TipoUsuario e) throws SystemException {
+    public void insertar(TipoInmueble e) throws SystemException {
         Session session = null;
         try {
             session = obtenerSesion();
@@ -51,7 +52,7 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
     }
 
     @Override
-    public void actualizar(TipoUsuario e) throws SystemException {
+    public void actualizar(TipoInmueble e) throws SystemException {
         Session session = null;
         try {
             session = obtenerSesion();
@@ -69,9 +70,9 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
         Session session = null;
         try {
             session = obtenerSesion();
-            TipoUsuario tipoUsuario = (TipoUsuario) session.get(TipoUsuario.class, id);
-            tipoUsuario.setEliminado(Boolean.TRUE);
-            session.update(tipoUsuario);
+            TipoInmueble tipoInmueble = (TipoInmueble) session.get(TipoInmueble.class, id);
+            tipoInmueble.setEliminado(Boolean.TRUE);
+            session.update(tipoInmueble);
             session.getTransaction().commit();
         } finally {
             if(session!=null && session.isOpen()){
@@ -81,27 +82,27 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
     }
 
     @Override
-    public TipoUsuario obtener(Integer id) throws SystemException {
+    public TipoInmueble obtener(Integer id) throws SystemException {
         Session session = null;
-        TipoUsuario tipoUsuario = null;
+        TipoInmueble tipoInmueble = null;
         try {
             session = obtenerSesion();
-            tipoUsuario = (TipoUsuario) session.get(TipoUsuario.class, id);
+            tipoInmueble = (TipoInmueble) session.get(TipoInmueble.class, id);
         } finally {
             if(session!=null && session.isOpen()){
                 cerrar(session);
             }
         }
-        return tipoUsuario;
+        return tipoInmueble;
     }
 
     @Override
-    public List<TipoUsuario> listar() throws SystemException {
-         Session session = null;
-        List<TipoUsuario> lista = null;
+    public List<TipoInmueble> listar() throws SystemException {
+        Session session = null;
+        List<TipoInmueble> lista = null;
         try {
             session = obtenerSesion();
-            String hql = "SELECT * FROM tipousuario tu WHERE tu.eliminado = 0";
+            String hql = "SELECT * FROM tipoinmueble ti WHERE ti.eliminado=0";
             Query query = session.createQuery(hql);
             lista = query.list();
         } finally {
@@ -109,5 +110,7 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
         }
         return lista;
     }
+    
+    
     
 }

@@ -14,6 +14,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -49,6 +51,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Inmueble implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idInmueble")
     private Integer idInmueble;
@@ -76,7 +79,7 @@ public class Inmueble implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.EAGER)
     private List<Imagen> imagenList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.EAGER)
-    private List<TipoInmueble> tipoinmuebleList;
+    private List<TipoInmueble> tipoInmuebleList;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario idUsuario;
@@ -191,12 +194,12 @@ public class Inmueble implements Serializable {
     }
 
     @XmlTransient
-    public List<TipoInmueble> getTipoinmuebleList() {
-        return tipoinmuebleList;
+    public List<TipoInmueble> getTipoInmuebleList() {
+        return tipoInmuebleList;
     }
 
-    public void setTipoinmuebleList(List<TipoInmueble> tipoinmuebleList) {
-        this.tipoinmuebleList = tipoinmuebleList;
+    public void setTipoInmuebleList(List<TipoInmueble> tipoInmuebleList) {
+        this.tipoInmuebleList = tipoInmuebleList;
     }
 
     public Usuario getIdUsuario() {

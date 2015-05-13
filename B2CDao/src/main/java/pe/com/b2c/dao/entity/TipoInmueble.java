@@ -10,6 +10,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,17 +28,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "tipoinmueble")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Tipoinmueble.findAll", query = "SELECT t FROM Tipoinmueble t"),
-    @NamedQuery(name = "Tipoinmueble.findByIdTipoInmueble", query = "SELECT t FROM Tipoinmueble t WHERE t.idTipoInmueble = :idTipoInmueble"),
-    @NamedQuery(name = "Tipoinmueble.findByDescripcion", query = "SELECT t FROM Tipoinmueble t WHERE t.descripcion = :descripcion")})
+    @NamedQuery(name = "TipoInmueble.findAll", query = "SELECT t FROM TipoInmueble t"),
+    @NamedQuery(name = "TipoInmueble.findByIdTipoInmueble", query = "SELECT t FROM TipoInmueble t WHERE t.idTipoInmueble = :idTipoInmueble"),
+    @NamedQuery(name = "TipoInmueble.findByDescripcion", query = "SELECT t FROM TipoInmueble t WHERE t.descripcion = :descripcion"),
+    @NamedQuery(name = "TipoInmueble.findByEliminado", query = "SELECT t FROM TipoInmueble t WHERE t.eliminado = :eliminado")})
 public class TipoInmueble implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idTipoInmueble")
     private Integer idTipoInmueble;
     @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "eliminado")
+    private Boolean eliminado;
     @JoinColumn(name = "idInmueble", referencedColumnName = "idInmueble")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Inmueble idInmueble;
@@ -62,6 +68,14 @@ public class TipoInmueble implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Boolean getEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(Boolean eliminado) {
+        this.eliminado = eliminado;
     }
 
     public Inmueble getIdInmueble() {
@@ -94,7 +108,7 @@ public class TipoInmueble implements Serializable {
 
     @Override
     public String toString() {
-        return "pe.com.b2c.dao.entity.Tipoinmueble[ idTipoInmueble=" + idTipoInmueble + " ]";
+        return "pe.com.b2c.dao.entity.TipoInmueble[ idTipoInmueble=" + idTipoInmueble + " ]";
     }
     
 }

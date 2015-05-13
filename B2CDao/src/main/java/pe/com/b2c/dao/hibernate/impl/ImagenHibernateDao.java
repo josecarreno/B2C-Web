@@ -8,8 +8,8 @@ package pe.com.b2c.dao.hibernate.impl;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import pe.com.b2c.dao.TipoUsuarioDao;
-import pe.com.b2c.dao.entity.TipoUsuario;
+import pe.com.b2c.dao.ImagenDao;
+import pe.com.b2c.dao.entity.Imagen;
 import pe.com.b2c.dao.hibernate.base.BaseHibernateDao;
 import pe.com.b2c.util.SystemException;
 
@@ -17,29 +17,30 @@ import pe.com.b2c.util.SystemException;
  *
  * @author Renato
  */
-public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsuarioDao{
+public class ImagenHibernateDao extends BaseHibernateDao implements ImagenDao{
 
     //Inicio Singleton
-    private static final TipoUsuarioHibernateDao TIPOUSUARIO_HIBERNATE_DAO;
+    private static final ImagenHibernateDao IMAGEN_HIBERNATE_DAO;
 
     static {
-        TIPOUSUARIO_HIBERNATE_DAO = new TipoUsuarioHibernateDao();
+        IMAGEN_HIBERNATE_DAO = new ImagenHibernateDao();
     }
 
-    private TipoUsuarioHibernateDao() {
+    private ImagenHibernateDao() {
 
     }
 
-    public static TipoUsuarioHibernateDao obtenerInstancia() {
-        return TIPOUSUARIO_HIBERNATE_DAO;
+    public static ImagenHibernateDao obtenerInstancia() {
+        return IMAGEN_HIBERNATE_DAO;
     }
     //Fin Singleton
     
     @Override
-    public void insertar(TipoUsuario e) throws SystemException {
+    public void insertar(Imagen e) throws SystemException {
         Session session = null;
         try {
             session = obtenerSesion();
+            e.setEliminado(Boolean.FALSE);
             session.save(e);
             session.getTransaction().commit();
         } finally {
@@ -51,11 +52,12 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
     }
 
     @Override
-    public void actualizar(TipoUsuario e) throws SystemException {
+    public void actualizar(Imagen e) throws SystemException {
         Session session = null;
         try {
             session = obtenerSesion();
             session.update(e);
+            e.setEliminado(Boolean.FALSE);
             session.getTransaction().commit();
         } finally {
             if(session!=null && session.isOpen()){
@@ -69,9 +71,9 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
         Session session = null;
         try {
             session = obtenerSesion();
-            TipoUsuario tipoUsuario = (TipoUsuario) session.get(TipoUsuario.class, id);
-            tipoUsuario.setEliminado(Boolean.TRUE);
-            session.update(tipoUsuario);
+            Imagen imagen = (Imagen) session.get(Imagen.class, id);
+            imagen.setEliminado(Boolean.TRUE);
+            session.update(imagen);
             session.getTransaction().commit();
         } finally {
             if(session!=null && session.isOpen()){
@@ -81,27 +83,27 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
     }
 
     @Override
-    public TipoUsuario obtener(Integer id) throws SystemException {
+    public Imagen obtener(Integer id) throws SystemException {
         Session session = null;
-        TipoUsuario tipoUsuario = null;
+        Imagen imagen = null;
         try {
             session = obtenerSesion();
-            tipoUsuario = (TipoUsuario) session.get(TipoUsuario.class, id);
+            imagen = (Imagen) session.get(Imagen.class, id);
         } finally {
             if(session!=null && session.isOpen()){
                 cerrar(session);
             }
         }
-        return tipoUsuario;
+        return imagen;
     }
 
     @Override
-    public List<TipoUsuario> listar() throws SystemException {
-         Session session = null;
-        List<TipoUsuario> lista = null;
+    public List<Imagen> listar() throws SystemException {
+        Session session = null;
+        List<Imagen> lista = null;
         try {
             session = obtenerSesion();
-            String hql = "SELECT * FROM tipousuario tu WHERE tu.eliminado = 0";
+            String hql = "SELECT im FROM imagen WHERE im.eliminado = 0";
             Query query = session.createQuery(hql);
             lista = query.list();
         } finally {
