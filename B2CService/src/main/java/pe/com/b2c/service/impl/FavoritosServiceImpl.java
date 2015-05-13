@@ -24,6 +24,7 @@ public class FavoritosServiceImpl implements FavoritosService{
     public static FavoritosServiceImpl obtenerInstancia(){
         return FAVORITOS_SERVICE_IMPL;
     }
+    //Fin Singleton
     
     @Override
     public void insertar(Favoritos e) throws SystemException {

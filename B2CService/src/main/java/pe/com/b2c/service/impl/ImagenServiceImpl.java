@@ -24,6 +24,7 @@ public class ImagenServiceImpl implements ImagenService{
     public static ImagenServiceImpl obtenerInstancia(){
         return IMAGEN_SERVICE_IMPL;
     }
+    //Fin Singleton
     
     @Override
     public void insertar(Imagen e) throws SystemException {
