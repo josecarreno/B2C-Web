@@ -39,6 +39,7 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
     public void insertar(TipoUsuario e) throws SystemException {
         Session session = null;
         try {
+            e.setEliminado(Boolean.FALSE);
             session = obtenerSesion();
             session.save(e);
             session.getTransaction().commit();

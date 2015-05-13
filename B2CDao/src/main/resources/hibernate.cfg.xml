@@ -7,5 +7,16 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/b2cdb?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">root</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    
+    <mapping class="pe.com.b2c.dao.entity.Favoritos"/>
+    <mapping class="pe.com.b2c.dao.entity.Imagen"/>
+    <mapping class="pe.com.b2c.dao.entity.Inmueble"/>
+    <mapping class="pe.com.b2c.dao.entity.TipoInmueble"/>
+    <mapping class="pe.com.b2c.dao.entity.TipoTransaccion"/>
+    <mapping class="pe.com.b2c.dao.entity.TipoUsuario"/>
+    <mapping class="pe.com.b2c.dao.entity.Usuario"/>
+    
   </session-factory>
 </hibernate-configuration>
