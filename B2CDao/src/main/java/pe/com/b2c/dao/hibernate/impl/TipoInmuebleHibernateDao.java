@@ -102,7 +102,7 @@ public class TipoInmuebleHibernateDao extends BaseHibernateDao implements TipoIn
         List<TipoInmueble> lista = null;
         try {
             session = obtenerSesion();
-            String hql = "SELECT * FROM tipoinmueble ti WHERE ti.eliminado=0";
+            String hql = "SELECT ti FROM TipoInmueble ti WHERE ti.eliminado=0";
             Query query = session.createQuery(hql);
             lista = query.list();
         } finally {

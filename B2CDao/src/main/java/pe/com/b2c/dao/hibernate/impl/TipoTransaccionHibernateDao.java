@@ -101,7 +101,7 @@ public class TipoTransaccionHibernateDao extends BaseHibernateDao implements Tip
         List<TipoTransaccion> lista = null;
         try {
             session = obtenerSesion();
-            String hql = "SELECT * FROM tipotransaccion tt WHERE tt.eliminado=0";
+            String hql = "SELECT tt FROM TipoTransaccion tt WHERE tt.eliminado=0";
             Query query = session.createQuery(hql);
             lista = query.list();
         } finally {

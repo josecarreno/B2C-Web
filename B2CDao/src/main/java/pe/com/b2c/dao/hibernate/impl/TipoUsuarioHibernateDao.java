@@ -102,7 +102,7 @@ public class TipoUsuarioHibernateDao extends BaseHibernateDao implements TipoUsu
         List<TipoUsuario> lista = null;
         try {
             session = obtenerSesion();
-            String hql = "SELECT * FROM tipousuario tu WHERE tu.eliminado = 0";
+            String hql = "SELECT tu FROM TipoUsuario tu WHERE tu.eliminado = 0";
             Query query = session.createQuery(hql);
             lista = query.list();
         } finally {

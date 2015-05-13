@@ -103,7 +103,7 @@ public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDa
         List<Inmueble> lista = null;
         try {
             session = obtenerSesion();
-            String hql = "SELECT i FROM inmueble WHERE i.eliminado = 0";
+            String hql = "SELECT i FROM Inmueble i WHERE i.eliminado = 0";
             Query query = session.createQuery(hql);
             lista = query.list();
         } finally {

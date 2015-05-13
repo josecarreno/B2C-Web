@@ -103,7 +103,7 @@ public class FavoritosHibernateDao extends BaseHibernateDao implements Favoritos
         List<Favoritos> lista = null;
         try {
             session = obtenerSesion();
-            String hql = "SELECT f FROM favoritos WHERE f.eliminado = 0";
+            String hql = "SELECT f FROM Favoritos f WHERE f.eliminado = 0";
             Query query = session.createQuery(hql);
             lista = query.list();
         } finally {

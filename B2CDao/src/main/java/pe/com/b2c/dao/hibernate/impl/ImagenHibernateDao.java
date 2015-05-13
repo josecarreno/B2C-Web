@@ -103,7 +103,7 @@ public class ImagenHibernateDao extends BaseHibernateDao implements ImagenDao{
         List<Imagen> lista = null;
         try {
             session = obtenerSesion();
-            String hql = "SELECT im FROM imagen WHERE im.eliminado = 0";
+            String hql = "SELECT im FROM Imagen im WHERE im.eliminado = 0";
             Query query = session.createQuery(hql);
             lista = query.list();
         } finally {

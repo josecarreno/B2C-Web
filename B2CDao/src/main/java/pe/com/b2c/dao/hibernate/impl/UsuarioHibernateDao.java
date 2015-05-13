@@ -103,7 +103,7 @@ public class UsuarioHibernateDao extends BaseHibernateDao implements UsuarioDao{
         List<Usuario> lista = null;
         try {
             session = obtenerSesion();
-            String hql = "SELECT * FROM usuario u WHERE u.eliminado = 0";
+            String hql = "SELECT * FROM Usuario u WHERE u.eliminado = 0";
             Query query = session.createQuery(hql);
             lista = query.list();
         } finally {
