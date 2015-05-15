@@ -39,6 +39,7 @@ public class TipoTransaccionHibernateDao extends BaseHibernateDao implements Tip
     public void insertar(TipoTransaccion e) throws SystemException {
         Session session = null;
         try {
+            e.setEliminado(Boolean.FALSE);
             session = obtenerSesion();
             session.save(e);
             session.getTransaction().commit();

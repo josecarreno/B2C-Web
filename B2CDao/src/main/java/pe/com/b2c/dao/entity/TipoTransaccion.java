@@ -55,6 +55,8 @@ public class TipoTransaccion implements Serializable {
         this.idtipotransaccion = idtipotransaccion;
     }
 
+
+
     public Integer getIdtipotransaccion() {
         return idtipotransaccion;
     }

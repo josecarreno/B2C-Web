@@ -39,6 +39,7 @@ public class UsuarioHibernateDao extends BaseHibernateDao implements UsuarioDao{
     public void insertar(Usuario e) throws SystemException {
         Session session = null;
         try {
+
             session = obtenerSesion();
             e.setEliminado(Boolean.FALSE);
             session.save(e);
@@ -103,7 +104,7 @@ public class UsuarioHibernateDao extends BaseHibernateDao implements UsuarioDao{
         List<Usuario> lista = null;
         try {
             session = obtenerSesion();
-            String hql = "SELECT * FROM Usuario u WHERE u.eliminado = 0";
+            String hql = "SELECT u FROM Usuario u WHERE u.eliminado = 0";
             Query query = session.createQuery(hql);
             lista = query.list();
         } finally {
