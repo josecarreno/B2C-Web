@@ -6,19 +6,21 @@
 package pe.com.b2c.dao.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,9 +45,8 @@ public class TipoInmueble implements Serializable {
     private String descripcion;
     @Column(name = "eliminado")
     private Boolean eliminado;
-    @JoinColumn(name = "idInmueble", referencedColumnName = "idInmueble")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Inmueble idInmueble;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoInmueble", fetch = FetchType.EAGER)
+    private List<Inmueble> inmuebleList;
 
     public TipoInmueble() {
     }
@@ -78,12 +79,13 @@ public class TipoInmueble implements Serializable {
         this.eliminado = eliminado;
     }
 
-    public Inmueble getIdInmueble() {
-        return idInmueble;
+    @XmlTransient
+    public List<Inmueble> getInmuebleList() {
+        return inmuebleList;
     }
 
-    public void setIdInmueble(Inmueble idInmueble) {
-        this.idInmueble = idInmueble;
+    public void setInmuebleList(List<Inmueble> inmuebleList) {
+        this.inmuebleList = inmuebleList;
     }
 
     @Override

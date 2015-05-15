@@ -6,6 +6,7 @@
 package pe.com.b2c.dao.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
@@ -61,14 +62,15 @@ public class Inmueble implements Serializable {
     private String direccion;
     @Column(name = "distrito")
     private String distrito;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "latitud")
-    private Long latitud;
+    private BigDecimal latitud;
     @Column(name = "longitud")
-    private Long longitud;
+    private BigDecimal longitud;
     @Column(name = "descripcion")
     private String descripcion;
     @Column(name = "precio")
-    private Long precio;
+    private BigDecimal precio;
     @Column(name = "cantidadFavoritos")
     private BigInteger cantidadFavoritos;
     @Column(name = "fechaCreacion")
@@ -78,14 +80,15 @@ public class Inmueble implements Serializable {
     private Boolean eliminado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.EAGER)
     private List<Imagen> imagenList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.EAGER)
-    private List<TipoInmueble> tipoInmuebleList;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario idUsuario;
     @JoinColumn(name = "idTipoTransaccion", referencedColumnName = "idtipotransaccion")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private TipoTransaccion idTipoTransaccion;
+    @JoinColumn(name = "idTipoInmueble", referencedColumnName = "idTipoInmueble")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private TipoInmueble idTipoInmueble;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.EAGER)
     private List<Favoritos> favoritosList;
 
@@ -128,19 +131,19 @@ public class Inmueble implements Serializable {
         this.distrito = distrito;
     }
 
-    public Long getLatitud() {
+    public BigDecimal getLatitud() {
         return latitud;
     }
 
-    public void setLatitud(Long latitud) {
+    public void setLatitud(BigDecimal latitud) {
         this.latitud = latitud;
     }
 
-    public Long getLongitud() {
+    public BigDecimal getLongitud() {
         return longitud;
     }
 
-    public void setLongitud(Long longitud) {
+    public void setLongitud(BigDecimal longitud) {
         this.longitud = longitud;
     }
 
@@ -152,11 +155,11 @@ public class Inmueble implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public Long getPrecio() {
+    public BigDecimal getPrecio() {
         return precio;
     }
 
-    public void setPrecio(Long precio) {
+    public void setPrecio(BigDecimal precio) {
         this.precio = precio;
     }
 
@@ -193,15 +196,6 @@ public class Inmueble implements Serializable {
         this.imagenList = imagenList;
     }
 
-    @XmlTransient
-    public List<TipoInmueble> getTipoInmuebleList() {
-        return tipoInmuebleList;
-    }
-
-    public void setTipoInmuebleList(List<TipoInmueble> tipoInmuebleList) {
-        this.tipoInmuebleList = tipoInmuebleList;
-    }
-
     public Usuario getIdUsuario() {
         return idUsuario;
     }
@@ -216,6 +210,14 @@ public class Inmueble implements Serializable {
 
     public void setIdTipoTransaccion(TipoTransaccion idTipoTransaccion) {
         this.idTipoTransaccion = idTipoTransaccion;
+    }
+
+    public TipoInmueble getIdTipoInmueble() {
+        return idTipoInmueble;
+    }
+
+    public void setIdTipoInmueble(TipoInmueble idTipoInmueble) {
+        this.idTipoInmueble = idTipoInmueble;
     }
 
     @XmlTransient

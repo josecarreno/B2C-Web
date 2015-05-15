@@ -40,6 +40,7 @@ public class TipoInmuebleHibernateDao extends BaseHibernateDao implements TipoIn
     public void insertar(TipoInmueble e) throws SystemException {
         Session session = null;
         try {
+            e.setEliminado(Boolean.FALSE);
             session = obtenerSesion();
             session.save(e);
             session.getTransaction().commit();
