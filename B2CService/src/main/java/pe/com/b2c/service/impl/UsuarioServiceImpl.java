@@ -2,7 +2,7 @@ package pe.com.b2c.service.impl;
 
 import java.util.List;
 import pe.com.b2c.dao.UsuarioDao;
-import pe.com.b2c.dao.entity.Usuario;
+import pe.com.b2c.dao.hibernate.entity.Usuario;
 import pe.com.b2c.service.UsuarioService;
 import pe.com.b2c.service.util.ServiceUtil;
 import pe.com.b2c.util.SystemException;

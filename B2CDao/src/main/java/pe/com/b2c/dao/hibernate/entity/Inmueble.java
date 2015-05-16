@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.com.b2c.dao.entity;
+package pe.com.b2c.dao.hibernate.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -78,18 +78,18 @@ public class Inmueble implements Serializable {
     private Date fechaCreacion;
     @Column(name = "eliminado")
     private Boolean eliminado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.LAZY)
     private List<Imagen> imagenList;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario idUsuario;
     @JoinColumn(name = "idTipoTransaccion", referencedColumnName = "idtipotransaccion")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoTransaccion idTipoTransaccion;
     @JoinColumn(name = "idTipoInmueble", referencedColumnName = "idTipoInmueble")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoInmueble idTipoInmueble;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.LAZY)
     private List<Favoritos> favoritosList;
 
     public Inmueble() {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.com.b2c.dao.entity;
+package pe.com.b2c.dao.hibernate.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -48,10 +48,10 @@ public class Favoritos implements Serializable {
     @Column(name = "eliminado")
     private Boolean eliminado;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario idUsuario;
     @JoinColumn(name = "idInmueble", referencedColumnName = "idInmueble")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Inmueble idInmueble;
 
     public Favoritos() {

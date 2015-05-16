@@ -9,7 +9,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import pe.com.b2c.dao.TipoTransaccionDao;
-import pe.com.b2c.dao.entity.TipoTransaccion;
+import pe.com.b2c.dao.hibernate.entity.TipoTransaccion;
 import pe.com.b2c.dao.hibernate.base.BaseHibernateDao;
 import pe.com.b2c.util.SystemException;
 

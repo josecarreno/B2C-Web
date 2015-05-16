@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.com.b2c.dao.entity;
+package pe.com.b2c.dao.hibernate.entity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,40 +27,40 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Renato
  */
 @Entity
-@Table(name = "tipotransaccion")
+@Table(name = "tipoinmueble")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "TipoTransaccion.findAll", query = "SELECT t FROM TipoTransaccion t"),
-    @NamedQuery(name = "TipoTransaccion.findByIdtipotransaccion", query = "SELECT t FROM TipoTransaccion t WHERE t.idtipotransaccion = :idtipotransaccion"),
-    @NamedQuery(name = "TipoTransaccion.findByDescripcion", query = "SELECT t FROM TipoTransaccion t WHERE t.descripcion = :descripcion"),
-    @NamedQuery(name = "TipoTransaccion.findByEliminado", query = "SELECT t FROM TipoTransaccion t WHERE t.eliminado = :eliminado")})
-public class TipoTransaccion implements Serializable {
+    @NamedQuery(name = "TipoInmueble.findAll", query = "SELECT t FROM TipoInmueble t"),
+    @NamedQuery(name = "TipoInmueble.findByIdTipoInmueble", query = "SELECT t FROM TipoInmueble t WHERE t.idTipoInmueble = :idTipoInmueble"),
+    @NamedQuery(name = "TipoInmueble.findByDescripcion", query = "SELECT t FROM TipoInmueble t WHERE t.descripcion = :descripcion"),
+    @NamedQuery(name = "TipoInmueble.findByEliminado", query = "SELECT t FROM TipoInmueble t WHERE t.eliminado = :eliminado")})
+public class TipoInmueble implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idtipotransaccion")
-    private Integer idtipotransaccion;
+    @Column(name = "idTipoInmueble")
+    private Integer idTipoInmueble;
     @Column(name = "descripcion")
     private String descripcion;
     @Column(name = "eliminado")
     private Boolean eliminado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoTransaccion", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoInmueble", fetch = FetchType.LAZY)
     private List<Inmueble> inmuebleList;
 
-    public TipoTransaccion() {
+    public TipoInmueble() {
     }
 
-    public TipoTransaccion(Integer idtipotransaccion) {
-        this.idtipotransaccion = idtipotransaccion;
+    public TipoInmueble(Integer idTipoInmueble) {
+        this.idTipoInmueble = idTipoInmueble;
     }
 
-    public Integer getIdtipotransaccion() {
-        return idtipotransaccion;
+    public Integer getIdTipoInmueble() {
+        return idTipoInmueble;
     }
 
-    public void setIdtipotransaccion(Integer idtipotransaccion) {
-        this.idtipotransaccion = idtipotransaccion;
+    public void setIdTipoInmueble(Integer idTipoInmueble) {
+        this.idTipoInmueble = idTipoInmueble;
     }
 
     public String getDescripcion() {
@@ -91,18 +91,18 @@ public class TipoTransaccion implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idtipotransaccion != null ? idtipotransaccion.hashCode() : 0);
+        hash += (idTipoInmueble != null ? idTipoInmueble.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TipoTransaccion)) {
+        if (!(object instanceof TipoInmueble)) {
             return false;
         }
-        TipoTransaccion other = (TipoTransaccion) object;
-        if ((this.idtipotransaccion == null && other.idtipotransaccion != null) || (this.idtipotransaccion != null && !this.idtipotransaccion.equals(other.idtipotransaccion))) {
+        TipoInmueble other = (TipoInmueble) object;
+        if ((this.idTipoInmueble == null && other.idTipoInmueble != null) || (this.idTipoInmueble != null && !this.idTipoInmueble.equals(other.idTipoInmueble))) {
             return false;
         }
         return true;
@@ -110,7 +110,7 @@ public class TipoTransaccion implements Serializable {
 
     @Override
     public String toString() {
-        return "pe.com.b2c.dao.entity.TipoTransaccion[ idtipotransaccion=" + idtipotransaccion + " ]";
+        return "pe.com.b2c.dao.entity.TipoInmueble[ idTipoInmueble=" + idTipoInmueble + " ]";
     }
     
 }

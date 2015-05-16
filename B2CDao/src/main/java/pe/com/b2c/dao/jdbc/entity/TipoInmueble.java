@@ -3,49 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.com.b2c.dao.entity;
+package pe.com.b2c.dao.jdbc.entity;
 
-import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Renato
- */
-@Entity
-@Table(name = "tipoinmueble")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TipoInmueble.findAll", query = "SELECT t FROM TipoInmueble t"),
-    @NamedQuery(name = "TipoInmueble.findByIdTipoInmueble", query = "SELECT t FROM TipoInmueble t WHERE t.idTipoInmueble = :idTipoInmueble"),
-    @NamedQuery(name = "TipoInmueble.findByDescripcion", query = "SELECT t FROM TipoInmueble t WHERE t.descripcion = :descripcion"),
-    @NamedQuery(name = "TipoInmueble.findByEliminado", query = "SELECT t FROM TipoInmueble t WHERE t.eliminado = :eliminado")})
-public class TipoInmueble implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idTipoInmueble")
+public class TipoInmueble{
+    
+   
     private Integer idTipoInmueble;
-    @Column(name = "descripcion")
     private String descripcion;
-    @Column(name = "eliminado")
     private Boolean eliminado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoInmueble", fetch = FetchType.EAGER)
     private List<Inmueble> inmuebleList;
 
     public TipoInmueble() {
@@ -79,7 +46,6 @@ public class TipoInmueble implements Serializable {
         this.eliminado = eliminado;
     }
 
-    @XmlTransient
     public List<Inmueble> getInmuebleList() {
         return inmuebleList;
     }

@@ -2,7 +2,7 @@ package pe.com.b2c.service.impl;
 
 import java.util.List;
 import pe.com.b2c.dao.FavoritosDao;
-import pe.com.b2c.dao.entity.Favoritos;
+import pe.com.b2c.dao.hibernate.entity.Favoritos;
 import pe.com.b2c.service.FavoritosService;
 import pe.com.b2c.service.util.ServiceUtil;
 import pe.com.b2c.util.SystemException;

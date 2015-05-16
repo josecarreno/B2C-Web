@@ -1,7 +1,7 @@
 package pe.com.b2c.service.impl;
 import java.util.List;
 import pe.com.b2c.dao.TipoTransaccionDao;
-import pe.com.b2c.dao.entity.TipoTransaccion;
+import pe.com.b2c.dao.hibernate.entity.TipoTransaccion;
 import pe.com.b2c.service.TipoTransaccionService;
 import pe.com.b2c.service.util.ServiceUtil;
 import pe.com.b2c.util.SystemException;
