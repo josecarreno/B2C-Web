@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.com.b2c.dao.hibernate.base;
+package pe.com.b2c.dao.base;
 
 import java.util.List;
 import pe.com.b2c.util.SystemException;

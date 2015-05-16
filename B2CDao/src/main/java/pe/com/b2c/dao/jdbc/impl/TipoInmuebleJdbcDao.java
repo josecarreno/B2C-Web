@@ -1,22 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pe.com.b2c.dao.jdbc.impl;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
-import pe.com.b2c.dao.jdbc.base.BaseJdbcDao;
-import pe.com.b2c.dao.jdbc.entity.TipoInmueble;
-import pe.com.b2c.jdc.dao.TipoInmuebleDao;
+import pe.com.b2c.dao.base.BaseJdbcDao;
+import pe.com.b2c.dao.entity.TipoInmueble;
+import pe.com.b2c.dao.TipoInmuebleDao;
 import pe.com.b2c.util.SystemException;
 
-/**
- *
- * @author Renato
- */
 public class TipoInmuebleJdbcDao extends BaseJdbcDao implements TipoInmuebleDao{
 
      //Inicio Singleton

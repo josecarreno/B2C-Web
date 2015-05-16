@@ -3,21 +3,49 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.com.b2c.dao.jdbc.entity;
+package pe.com.b2c.dao.entity;
 
+import java.io.Serializable;
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Renato
+ * @author jose
  */
-
-public class TipoUsuario{
-    
+@Entity
+@Table(name = "tipousuario")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "TipoUsuario.findAll", query = "SELECT t FROM TipoUsuario t"),
+    @NamedQuery(name = "TipoUsuario.findByIdTipoUsuario", query = "SELECT t FROM TipoUsuario t WHERE t.idTipoUsuario = :idTipoUsuario"),
+    @NamedQuery(name = "TipoUsuario.findByDescripcion", query = "SELECT t FROM TipoUsuario t WHERE t.descripcion = :descripcion"),
+    @NamedQuery(name = "TipoUsuario.findByEliminado", query = "SELECT t FROM TipoUsuario t WHERE t.eliminado = :eliminado")})
+public class TipoUsuario implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idTipoUsuario")
     private Integer idTipoUsuario;
+    @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "eliminado")
     private Boolean eliminado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoUsuario", fetch = FetchType.LAZY)
     private List<Usuario> usuarioList;
 
     public TipoUsuario() {
@@ -51,6 +79,7 @@ public class TipoUsuario{
         this.eliminado = eliminado;
     }
 
+    @XmlTransient
     public List<Usuario> getUsuarioList() {
         return usuarioList;
     }

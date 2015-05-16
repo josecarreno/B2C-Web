@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.com.b2c.dao.hibernate.entity;
+package pe.com.b2c.dao.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Renato
+ * @author jose
  */
 @Entity
 @Table(name = "favoritos")

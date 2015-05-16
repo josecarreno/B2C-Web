@@ -1,4 +1,4 @@
-package pe.com.b2c.dao.hibernate.base;
+package pe.com.b2c.dao.base;
 
 
 import org.hibernate.HibernateException;

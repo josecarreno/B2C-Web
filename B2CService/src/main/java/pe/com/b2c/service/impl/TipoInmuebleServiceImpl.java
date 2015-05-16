@@ -2,7 +2,7 @@ package pe.com.b2c.service.impl;
 
 import java.util.List;
 import pe.com.b2c.dao.TipoInmuebleDao;
-import pe.com.b2c.dao.hibernate.entity.TipoInmueble;
+import pe.com.b2c.dao.entity.TipoInmueble;
 import pe.com.b2c.service.TipoInmuebleService;
 import pe.com.b2c.service.util.ServiceUtil;
 import pe.com.b2c.util.SystemException;

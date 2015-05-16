@@ -2,7 +2,7 @@ package pe.com.b2c.service.impl;
 
 import java.util.List;
 import pe.com.b2c.dao.ImagenDao;
-import pe.com.b2c.dao.hibernate.entity.Imagen;
+import pe.com.b2c.dao.entity.Imagen;
 import pe.com.b2c.service.ImagenService;
 import pe.com.b2c.service.util.ServiceUtil;
 import pe.com.b2c.util.SystemException;

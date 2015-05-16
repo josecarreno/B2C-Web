@@ -4,13 +4,13 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import pe.com.b2c.dao.jdbc.entity.Inmueble;
-import pe.com.b2c.dao.jdbc.base.BaseJdbcDao;
-import pe.com.b2c.dao.jdbc.entity.TipoInmueble;
-import pe.com.b2c.dao.jdbc.entity.TipoTransaccion;
-import pe.com.b2c.dao.jdbc.entity.TipoUsuario;
-import pe.com.b2c.dao.jdbc.entity.Usuario;
-import pe.com.b2c.jdc.dao.InmuebleDao;
+import pe.com.b2c.dao.entity.Inmueble;
+import pe.com.b2c.dao.base.BaseJdbcDao;
+import pe.com.b2c.dao.entity.TipoInmueble;
+import pe.com.b2c.dao.entity.TipoTransaccion;
+import pe.com.b2c.dao.entity.TipoUsuario;
+import pe.com.b2c.dao.entity.Usuario;
+import pe.com.b2c.dao.InmuebleDao;
 import pe.com.b2c.util.SystemException;
 
 public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {

@@ -1,23 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pe.com.b2c.dao.jdbc.impl;
 
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
-import pe.com.b2c.dao.jdbc.base.BaseJdbcDao;
-import pe.com.b2c.dao.jdbc.entity.TipoUsuario;
-import pe.com.b2c.dao.jdbc.entity.Usuario;
-import pe.com.b2c.jdc.dao.UsuarioDao;
+import pe.com.b2c.dao.base.BaseJdbcDao;
+import pe.com.b2c.dao.entity.TipoUsuario;
+import pe.com.b2c.dao.entity.Usuario;
+import pe.com.b2c.dao.UsuarioDao;
 import pe.com.b2c.util.SystemException;
 
-/**
- *
- * @author Renato
- */
 public class UsuarioJdbcDao extends BaseJdbcDao implements UsuarioDao{
 
     

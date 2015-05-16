@@ -1,22 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pe.com.b2c.dao.hibernate.impl;
 
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import pe.com.b2c.hibernate.dao.InmuebleDao;
-import pe.com.b2c.dao.hibernate.entity.Inmueble;
-import pe.com.b2c.dao.hibernate.base.BaseHibernateDao;
+import pe.com.b2c.dao.InmuebleDao;
+import pe.com.b2c.dao.entity.Inmueble;
+import pe.com.b2c.dao.base.BaseHibernateDao;
 import pe.com.b2c.util.SystemException;
 
-/**
- *
- * @author Renato
- */
 public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDao{
 
     //Inicio Singleton
@@ -36,7 +27,7 @@ public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDa
     //Fin Singleton
     
     @Override
-    public void insertar(pe.com.b2c.dao.hibernate.entity.Inmueble e) throws SystemException {
+    public void insertar(pe.com.b2c.dao.entity.Inmueble e) throws SystemException {
         Session session = null;
         try {
             session = obtenerSesion();
@@ -52,7 +43,7 @@ public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDa
     }
 
     @Override
-    public void actualizar(pe.com.b2c.dao.hibernate.entity.Inmueble e) throws SystemException {
+    public void actualizar(pe.com.b2c.dao.entity.Inmueble e) throws SystemException {
         Session session = null;
         try {
             session = obtenerSesion();

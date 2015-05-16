@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pe.com.b2c.dao.jdbc.base;
+package pe.com.b2c.dao.base;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -22,7 +22,7 @@ public class ConexionJdbc {
     protected Connection cn = null;
     protected PreparedStatement pr = null;
     protected ResultSet rs = null;
-    private String nombreArchivo = "propiedades";
+    private final String nombreArchivo = "propiedades";
     
     protected Connection obtenerConexion() throws Exception{
         if(obtenerPropiedad(nombreArchivo, "pool").equals("1")){

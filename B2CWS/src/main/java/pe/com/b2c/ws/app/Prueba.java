@@ -8,7 +8,7 @@ package pe.com.b2c.ws.app;
 import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pe.com.b2c.dao.hibernate.entity.Usuario;
+import pe.com.b2c.dao.entity.Usuario;
 import pe.com.b2c.service.impl.UsuarioServiceImpl;
 import pe.com.b2c.util.SystemException;
 
@@ -18,7 +18,7 @@ import pe.com.b2c.util.SystemException;
  */
 
 @RestController
-public class Juanito {
+public class Prueba {
     
     @RequestMapping("/listarUsuarios")
     public List<Usuario> listar() throws SystemException{
