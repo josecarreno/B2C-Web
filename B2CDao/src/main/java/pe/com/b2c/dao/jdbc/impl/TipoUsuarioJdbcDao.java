@@ -134,7 +134,7 @@ public class TipoUsuarioJdbcDao extends BaseJdbcDao implements TipoUsuarioDao{
         try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT * FROM tipousuario ORDER BY descripcion");
+            sb.append("SELECT * FROM tipousuario WHERE eliminado = 0");
             pr = cn.prepareStatement(sb.toString());
             rs = pr.executeQuery();
             while(rs.next()){
