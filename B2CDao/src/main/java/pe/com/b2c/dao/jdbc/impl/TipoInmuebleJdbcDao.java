@@ -9,42 +9,39 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import pe.com.b2c.dao.jdbc.base.BaseJdbcDao;
-import pe.com.b2c.dao.jdbc.entity.TipoUsuario;
-import pe.com.b2c.jdc.dao.TipoUsuarioDao;
+import pe.com.b2c.dao.jdbc.entity.TipoInmueble;
+import pe.com.b2c.jdc.dao.TipoInmuebleDao;
 import pe.com.b2c.util.SystemException;
-
 
 /**
  *
  * @author Renato
  */
-public class TipoUsuarioJdbcDao extends BaseJdbcDao implements TipoUsuarioDao{
+public class TipoInmuebleJdbcDao extends BaseJdbcDao implements TipoInmuebleDao{
 
-    
-    //Inicio Singleton
-    private static final TipoUsuarioJdbcDao TIPOUSUARIO_JDBC_DAO;
+     //Inicio Singleton
+    private static final TipoInmuebleJdbcDao TIPOINMUEBLE_JDBC_DAO;
     
     static {
-        TIPOUSUARIO_JDBC_DAO = new TipoUsuarioJdbcDao();
+        TIPOINMUEBLE_JDBC_DAO = new TipoInmuebleJdbcDao();
     }
     
     
-    private TipoUsuarioJdbcDao(){
+    private TipoInmuebleJdbcDao(){
         
     }
     
-    public static TipoUsuarioJdbcDao obtenerInstancia(){
-        return TIPOUSUARIO_JDBC_DAO;
+    public static TipoInmuebleJdbcDao obtenerInstancia(){
+        return TIPOINMUEBLE_JDBC_DAO;
     }
     //Fin Singleton
     
     @Override
-    public void insertar(TipoUsuario e) throws SystemException {
-        
+    public void insertar(TipoInmueble e) throws SystemException {
         try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
-            sb.append("INSERT INTO tipousuario(descripcion, eliminado) VALUES(?,?)");
+            sb.append("INSERT INTO tipoinmueble(descripcion, eliminado) VALUES(?,?)");
             pr = cn.prepareStatement(sb.toString(), 
                     PreparedStatement.RETURN_GENERATED_KEYS);
             pr.setString(1, e.getDescripcion().trim().toUpperCase());
@@ -53,7 +50,7 @@ public class TipoUsuarioJdbcDao extends BaseJdbcDao implements TipoUsuarioDao{
             //Obtener las claves autogeneradas
             rs = pr.getGeneratedKeys();
             rs.next();
-            e.setIdTipoUsuario(rs.getInt(1));
+            e.setIdTipoInmueble(rs.getInt(1));
             
         } catch (Exception ex) {
             throw new SystemException(ex);
@@ -63,17 +60,17 @@ public class TipoUsuarioJdbcDao extends BaseJdbcDao implements TipoUsuarioDao{
     }
 
     @Override
-    public void actualizar(TipoUsuario e) throws SystemException {
+    public void actualizar(TipoInmueble e) throws SystemException {
         try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
-            sb.append("UPDATE tipousuario SET ");
+            sb.append("UPDATE tipoinmueble SET ");
             sb.append("descripcion = ? ");
             sb.append("WHERE ");
-            sb.append("idTipoUsuario = ? ");
+            sb.append("idTipoInmueble = ? ");
             pr = cn.prepareStatement(sb.toString());
             pr.setString(1, e.getDescripcion().trim().toUpperCase());
-            pr.setInt(2, e.getIdTipoUsuario());
+            pr.setInt(2, e.getIdTipoInmueble());
             pr.executeUpdate(); 
         } catch (Exception ex) {
             throw new SystemException(ex);
@@ -84,15 +81,14 @@ public class TipoUsuarioJdbcDao extends BaseJdbcDao implements TipoUsuarioDao{
 
     @Override
     public void eliminar(Integer id) throws SystemException {
-        
         try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
             
-            sb.append("UPDATE tipousuario SET ");
+            sb.append("UPDATE tipoinmueble SET ");
             sb.append("eliminado = ? ");
             sb.append("WHERE ");
-            sb.append("idTipoUsuario = ? ");
+            sb.append("idTipoInmueble = ? ");
             pr = cn.prepareStatement(sb.toString());
             pr.setBoolean(1, true);
             pr.setInt(2, id);
@@ -105,52 +101,49 @@ public class TipoUsuarioJdbcDao extends BaseJdbcDao implements TipoUsuarioDao{
     }
 
     @Override
-    public TipoUsuario obtener(Integer id) throws SystemException {
-        TipoUsuario tipoUsuario = null;
+    public TipoInmueble obtener(Integer id) throws SystemException {
+        TipoInmueble tipoInmueble = null;
         try{
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT * FROM tipousuario WHERE idTipoUsuario = ? AND eliminado = 0");
+            sb.append("SELECT * FROM tipoinmueble WHERE idTipoInmueble = ? AND eliminado = 0");
             pr = cn.prepareStatement(sb.toString());
             pr.setInt(1, id);
             rs = pr.executeQuery();
             while(rs.next()){
-                tipoUsuario = new TipoUsuario();
-                tipoUsuario.setIdTipoUsuario(rs.getInt("idTipoUsuario"));
-                tipoUsuario.setDescripcion(rs.getString("descripcion"));
+                tipoInmueble = new TipoInmueble();
+                tipoInmueble.setIdTipoInmueble(rs.getInt("idTipoInmueble"));
+                tipoInmueble.setDescripcion(rs.getString("descripcion"));
             }
         }catch(Exception ex){
             throw new SystemException(ex);
         }finally{
             cerrar(cn, pr, rs);
         }
-        return tipoUsuario;
+        return tipoInmueble;
     }
 
     @Override
-    public List<TipoUsuario> listar() throws SystemException {
-        
-        List<TipoUsuario> listaUsuarios = new ArrayList<TipoUsuario>();
+    public List<TipoInmueble> listar() throws SystemException {
+        List<TipoInmueble> listaInmuebles = new ArrayList<TipoInmueble>();
         try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT * FROM tipousuario WHERE eliminado = 0");
+            sb.append("SELECT * FROM tipoinmueble WHERE eliminado = 0");
             pr = cn.prepareStatement(sb.toString());
             rs = pr.executeQuery();
             while(rs.next()){
-                TipoUsuario c = new TipoUsuario();
-                c.setIdTipoUsuario(rs.getInt("idTipoUsuario"));
+                TipoInmueble c = new TipoInmueble();
+                c.setIdTipoInmueble(rs.getInt("idTipoInmueble"));
                 c.setDescripcion(rs.getString("descripcion"));
-                listaUsuarios.add(c);
+                listaInmuebles.add(c);
             }
         } catch (Exception e) {
             throw new SystemException(e);
         }finally{
             cerrar(cn, pr, rs);
         }
-        return listaUsuarios;
+        return listaInmuebles;
     }
-
-
-   
+    
 }
