@@ -19,7 +19,7 @@ import pe.com.b2c.util.SystemException;
 
 @RestController
 public class Prueba {
-    
+
     @RequestMapping("/listarUsuarios")
     public List<Usuario> listar() throws SystemException{
         

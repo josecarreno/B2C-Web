@@ -5,6 +5,7 @@
  */
 package pe.com.b2c.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -53,6 +54,7 @@ public class Usuario implements Serializable {
     @Column(name = "usuario")
     private String usuario;
     @Column(name = "password")
+    @JsonIgnore
     private String password;
     @Column(name = "nombre")
     private String nombre;

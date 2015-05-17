@@ -11,6 +11,7 @@ import pe.com.b2c.dao.entity.TipoTransaccion;
 import pe.com.b2c.dao.entity.TipoUsuario;
 import pe.com.b2c.dao.entity.Usuario;
 import pe.com.b2c.dao.InmuebleDao;
+import pe.com.b2c.dao.entity.Imagen;
 import pe.com.b2c.util.SystemException;
 
 public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {
@@ -145,6 +146,42 @@ public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {
         }
     }
 
+    private List<Imagen> obtenerImagenesDeInmueble(Integer idInmueble) throws SystemException {
+        List<Imagen> lstImg = new ArrayList<>();
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append("SELECT img.*");
+            sb.append("FROM ");
+            sb.append("inmueble i, imagen img ");
+            sb.append("WHERE ");
+            sb.append("img.idInmueble = ? AND ");
+            sb.append("img.eliminado = 0 ");
+            pr = cn.prepareStatement(sb.toString());
+            pr.setInt(1, idInmueble);
+            rs = pr.executeQuery();
+            
+            while (rs.next()) {
+                Imagen img = new Imagen();
+                img.setIdImagen(rs.getInt("idImagen"));
+                img.setImgBlob(rs.getBytes("imgBlob"));
+                
+                Inmueble i = new Inmueble();
+                i.setIdInmueble(rs.getInt("idInmueble"));
+                //no seteo los demas elementos de inmueble para evitar recursion
+                
+                img.setIdInmueble(i);
+                img.setEliminado(Boolean.FALSE);
+                
+                lstImg.add(img);
+            }
+            
+        } catch (Exception ex) {
+            throw new SystemException(ex);
+        }
+        
+        return lstImg;
+    }
+
     @Override
     public Inmueble obtener(Integer id) throws SystemException {
         Inmueble i = null;
@@ -160,7 +197,8 @@ public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {
             sb.append("i.idUsuario = u.idUsuario AND ");
             sb.append("u.idTipoUsuario = tu.idTipoUsuario AND ");
             sb.append("i.idTipoTransaccion = tt.idTipoTransaccion AND ");
-            sb.append("i.idTipoInmueble = ti.idTipoInmueble");
+            sb.append("i.idTipoInmueble = ti.idTipoInmueble AND ");
+            sb.append("i.eliminado = 0 ");
             pr = cn.prepareStatement(sb.toString());
             pr.setInt(1, id);
             rs = pr.executeQuery();
@@ -200,15 +238,17 @@ public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {
                 tt.setIdtipotransaccion(rs.getInt(29));
                 tt.setDescripcion(rs.getString(30));
                 tt.setEliminado(rs.getBoolean(31));
-                
+
                 i.setIdTipoTransaccion(tt);
-                
+
                 TipoInmueble ti = new TipoInmueble();
                 ti.setIdTipoInmueble(rs.getInt(32));
                 ti.setDescripcion(rs.getString(33));
                 ti.setEliminado(rs.getBoolean(34));
 
                 i.setIdTipoInmueble(ti);
+                
+                i.setImagenList(obtenerImagenesDeInmueble(id));
             }
         } catch (Exception ex) {
             throw new SystemException(ex);
@@ -232,7 +272,8 @@ public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {
             sb.append("i.idUsuario = u.idUsuario AND ");
             sb.append("u.idTipoUsuario = tu.idTipoUsuario AND ");
             sb.append("i.idTipoTransaccion = tt.idTipoTransaccion AND ");
-            sb.append("i.idTipoInmueble = ti.idTipoInmueble");
+            sb.append("i.idTipoInmueble = ti.idTipoInmueble AND");
+            sb.append("i.eliminado = 0 ");
             pr = cn.prepareStatement(sb.toString());
             rs = pr.executeQuery();
             while (rs.next()) {
@@ -271,9 +312,9 @@ public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {
                 tt.setIdtipotransaccion(rs.getInt(29));
                 tt.setDescripcion(rs.getString(30));
                 tt.setEliminado(rs.getBoolean(31));
-                
+
                 i.setIdTipoTransaccion(tt);
-                
+
                 TipoInmueble ti = new TipoInmueble();
                 ti.setIdTipoInmueble(rs.getInt(32));
                 ti.setDescripcion(rs.getString(33));
@@ -281,6 +322,8 @@ public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {
 
                 i.setIdTipoInmueble(ti);
                 
+                i.setImagenList(obtenerImagenesDeInmueble(i.getIdInmueble()));
+
                 lista.add(i);
             }
         } catch (Exception ex) {
