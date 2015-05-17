@@ -133,6 +133,8 @@ public class UsuarioJdbcDao extends BaseJdbcDao implements UsuarioDao{
                 usuario.getIdTipoUsuario().setDescripcion(rs.getString("descripcion"));
                 usuario.getIdTipoUsuario().setEliminado(rs.getBoolean("eliminado"));
                 
+                usuario.setEliminado(rs.getBoolean("eliminado"));
+                
             }
         }catch(Exception ex){
             throw new SystemException(ex);
