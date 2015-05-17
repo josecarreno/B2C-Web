@@ -182,5 +182,51 @@ public class UsuarioJdbcDao extends BaseJdbcDao implements UsuarioDao{
         }
         return lista;
     }
+
+    @Override
+    public Usuario validarUsuario(String usuario, String password) 
+            throws SystemException {
+        Usuario u = null;
+        try{
+           cn = obtenerConexion();
+            StringBuilder sb = new StringBuilder();
+            sb.append("SELECT * FROM b2cdb.usuario u ");
+            sb.append("JOIN b2cdb.tipousuario tu ");
+            sb.append("ON u.idTipoUsuario = tu.idTipoUsuario ");
+            sb.append("WHERE u.usuario = ? ");
+            sb.append("AND u.password = ? ");
+            sb.append("AND eliminado = 0");
+            pr = cn.prepareStatement(sb.toString());
+            pr.setString(1, usuario);
+            pr.setString(2, password);
+            rs = pr.executeQuery();
+            while(rs.next()){
+                u = new Usuario();
+                u.setIdUsuario(rs.getInt("idUsuario"));
+                u.setDireccion(rs.getString("direccion"));
+                u.setEliminado(rs.getBoolean("eliminado"));
+                u.setEmail(rs.getString("email"));
+                u.setNombre(rs.getString("nombre"));
+                u.setPassword(rs.getString("password"));
+                u.setRuc(rs.getString("ruc"));
+                u.setTelefono(rs.getString("telefono"));
+                u.setUsuario(rs.getString("usuario"));
+                u.setWeb(rs.getString("web"));
+                
+                u.setIdTipoUsuario(new TipoUsuario());
+                u.getIdTipoUsuario().setIdTipoUsuario(rs.getInt("idTipoUsuario"));
+                u.getIdTipoUsuario().setDescripcion(rs.getString("descripcion"));
+                u.getIdTipoUsuario().setEliminado(rs.getBoolean("eliminado"));
+                
+                u.setEliminado(rs.getBoolean("eliminado"));
+                
+            }
+        }catch(Exception ex){
+            throw new SystemException(ex);
+        }finally{
+            cerrar(cn, pr, rs);
+        }
+        return u;
+    }
     
 }

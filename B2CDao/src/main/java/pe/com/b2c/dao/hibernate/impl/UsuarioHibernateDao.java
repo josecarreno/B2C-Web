@@ -103,5 +103,10 @@ public class UsuarioHibernateDao extends BaseHibernateDao implements UsuarioDao{
         }
         return lista;
     }
+
+    @Override
+    public Usuario validarUsuario(String usuario, String password) throws SystemException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

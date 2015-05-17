@@ -50,5 +50,10 @@ public class UsuarioServiceImpl implements UsuarioService{
     public List<Usuario> listar() throws SystemException {
         return usuarioDao.listar();
     }
+
+    @Override
+    public Usuario validarUsuario(String usuario, String password) throws SystemException {
+        return usuarioDao.validarUsuario(usuario, password);
+    }
     
 }
