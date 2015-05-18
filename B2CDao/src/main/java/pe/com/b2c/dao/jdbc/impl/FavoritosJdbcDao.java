@@ -200,7 +200,7 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
             
         } catch (Exception e) {
         }finally{
-            
+            cerrar(cn, pr, rs);
         }
         return lista;
     }
