@@ -14,6 +14,7 @@ import pe.com.b2c.dao.entity.Usuario;
 import pe.com.b2c.service.UsuarioService;
 import pe.com.b2c.util.SystemException;
 import pe.com.b2c.ws.util.WSUtil;
+import pe.com.b2c.ws.wrapper.Respuesta;
 import pe.com.b2c.ws.wrapper.ValidaUsuario;
 
 @RestController
@@ -45,6 +46,15 @@ public class UsuarioController {
     public @ResponseBody
     void createUsuario(@RequestBody Usuario u) throws SystemException{
         us.insertar(u);
+    }
+    
+    @RequestMapping(value = UsuarioURIConstants.UPDATE_USER, 
+            method = RequestMethod.POST,
+            produces = "Application/json")
+    public @ResponseBody
+    Respuesta updateUsuario(@RequestBody Usuario u) throws SystemException{
+        us.actualizar(u);
+        return (new Respuesta("Se actualizo el usuario correctamente"));
     }
 
     @RequestMapping(value = UsuarioURIConstants.LOGIN_USER, 

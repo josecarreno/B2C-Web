@@ -71,8 +71,8 @@ public class UsuarioJdbcDao extends BaseJdbcDao implements UsuarioDao{
             sb.append("WHERE ");
             sb.append("idUsuario = ?");
             pr = cn.prepareStatement(sb.toString());
-            pr.setString(1, e.getNombre().trim().toUpperCase());
-            pr.setString(2, e.getEmail().trim().toUpperCase());
+            pr.setString(1, e.getNombre().trim());
+            pr.setString(2, e.getEmail().trim());
             pr.setInt(3, e.getIdTipoUsuario().getIdTipoUsuario());
             pr.setInt(4, e.getIdUsuario());
             

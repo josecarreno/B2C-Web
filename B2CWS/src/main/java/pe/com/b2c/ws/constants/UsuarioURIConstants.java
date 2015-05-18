@@ -6,6 +6,7 @@ public class UsuarioURIConstants {
 	public static final String GET_USER = "/user/{idUsuario}";
 	public static final String GET_ALL_USER = "/users";
 	public static final String CREATE_USER = "/user/create";
+        public static final String UPDATE_USER = "/user/update";
 	public static final String DELETE_USER = "/user/delete/{idUsuario}";
         public static final String LOGIN_USER = "/user/login";
 		
