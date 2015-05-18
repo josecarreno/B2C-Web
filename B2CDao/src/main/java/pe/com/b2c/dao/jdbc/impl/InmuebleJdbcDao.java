@@ -272,7 +272,7 @@ public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {
             sb.append("i.idUsuario = u.idUsuario AND ");
             sb.append("u.idTipoUsuario = tu.idTipoUsuario AND ");
             sb.append("i.idTipoTransaccion = tt.idTipoTransaccion AND ");
-            sb.append("i.idTipoInmueble = ti.idTipoInmueble AND");
+            sb.append("i.idTipoInmueble = ti.idTipoInmueble AND ");
             sb.append("i.eliminado = 0 ");
             pr = cn.prepareStatement(sb.toString());
             rs = pr.executeQuery();
