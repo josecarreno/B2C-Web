@@ -5,6 +5,7 @@
  */
 package pe.com.b2c.dao.jdbc.impl;
 
+import java.math.BigInteger;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +14,10 @@ import pe.com.b2c.dao.FavoritosDao;
 import pe.com.b2c.dao.base.BaseJdbcDao;
 import pe.com.b2c.dao.entity.Favoritos;
 import pe.com.b2c.dao.entity.Inmueble;
+import pe.com.b2c.dao.entity.TipoInmueble;
+import pe.com.b2c.dao.entity.TipoTransaccion;
+import pe.com.b2c.dao.entity.TipoUsuario;
+import pe.com.b2c.dao.entity.Usuario;
 import pe.com.b2c.util.SystemException;
 
 /**
@@ -135,6 +140,63 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
         
         List<Inmueble> lista = new ArrayList<Inmueble>();
         try {
+            cn = obtenerConexion();
+            StringBuilder sb = new StringBuilder();
+            sb.append("SELECT * FROM favoritos f JOIN inmueble i ON f.idInmueble = i.idInmueble WHERE f.idUsuario = ?");
+            pr = cn.prepareStatement(sb.toString());
+            rs = pr.executeQuery();
+            
+            while(rs.next()){
+                
+                Inmueble i = new Inmueble();
+                
+                i.setIdInmueble(rs.getInt("idInmueble"));
+                i.setTitulo(rs.getString("titulo"));
+                i.setDireccion(rs.getString("direccion"));
+                i.setDistrito(rs.getString("distrito"));
+                i.setLatitud(rs.getBigDecimal("latitud"));
+                i.setLongitud(rs.getBigDecimal("longitud"));
+                i.setDescripcion(rs.getString("descripcion"));
+                i.setPrecio(rs.getBigDecimal("precio"));
+                
+                i.setIdUsuario(new Usuario());
+                i.getIdUsuario().setIdUsuario(rs.getInt("idUsuario"));
+                i.getIdUsuario().setUsuario(rs.getString("usuario"));
+                i.getIdUsuario().setPassword(rs.getString("password"));
+                i.getIdUsuario().setNombre(rs.getString("nombre"));
+                i.getIdUsuario().setEmail(rs.getString("email"));
+                i.getIdUsuario().setRuc(rs.getString("ruc"));
+                i.getIdUsuario().setDireccion(rs.getString("direccion"));
+                i.getIdUsuario().setWeb(rs.getString("web"));
+                i.getIdUsuario().setTelefono(rs.getString("telofono"));
+                
+                i.getIdUsuario().setIdTipoUsuario(new TipoUsuario());
+                i.getIdUsuario().getIdTipoUsuario().setIdTipoUsuario(rs.getInt("idTipoUsuario"));
+                i.getIdUsuario().getIdTipoUsuario().setDescripcion(rs.getString("descripcion"));
+                i.getIdUsuario().getIdTipoUsuario().setEliminado(rs.getBoolean("eliminado"));
+                
+                i.setIdTipoTransaccion(new TipoTransaccion());
+                i.getIdTipoTransaccion().setIdtipotransaccion(rs.getInt("idTipoTransaccion"));
+                i.getIdTipoTransaccion().setDescripcion(rs.getString("descripcion"));
+                i.getIdTipoTransaccion().setEliminado(rs.getBoolean("eliminado"));
+                
+                BigInteger bi = BigInteger.valueOf(rs.getLong("cantidadFavoritos"));
+                i.setCantidadFavoritos(bi);
+                
+                i.setFechaCreacion(rs.getDate("fechaCreacion"));
+                i.setEliminado(rs.getBoolean("eliminado"));
+                
+                i.setIdTipoInmueble(new TipoInmueble());
+                i.getIdTipoInmueble().setIdTipoInmueble(rs.getInt("idTipoInmueble"));
+                i.getIdTipoInmueble().setDescripcion(rs.getString("descripcion"));
+                i.getIdTipoInmueble().setEliminado(rs.getBoolean("eliminado"));
+                
+                i.setEliminado(rs.getBoolean("eliminado"));
+                
+                lista.add(i);
+                
+                
+            }
             
         } catch (Exception e) {
         }finally{
