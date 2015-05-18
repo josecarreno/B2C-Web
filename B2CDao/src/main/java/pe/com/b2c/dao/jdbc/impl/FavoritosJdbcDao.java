@@ -125,6 +125,8 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
             pr.setBoolean(4, false);
             
             pr.executeUpdate();
+            
+            actualizarCantidadFavoritos(idInmueble, 1);
         
             
         } catch (Exception ex) {
@@ -218,6 +220,8 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
             
             pr.executeUpdate();
             
+            actualizarCantidadFavoritos(idInmueble, -1);
+            
             
         } catch (Exception ex) {
             throw new SystemException(ex);
@@ -225,5 +229,53 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
             cerrar(cn, pr, rs);
         }
     }
+
+  
+    private void actualizarCantidadFavoritos(Integer idInmueble, int a) {
+        
+        try{
+           
+            BigInteger cantidad = getCantidadFavoritosInmuebles(idInmueble);
+            
+            StringBuilder sb = new StringBuilder();
+            sb.append("UPDATE inmueble SET ");
+            sb.append("cantidadFavoritos = ? ");
+            sb.append("WHERE ");
+            sb.append("idInmueble = ?");
+            pr = cn.prepareStatement(sb.toString());
+            
+            pr.setLong(1, cantidad.longValue()+a);
+            pr.setInt(2, idInmueble);
+            
+  
+            
+            pr.executeUpdate();
+        }catch(Exception ex){
+         
+        }
+    }
+
+   
+    private BigInteger getCantidadFavoritosInmuebles(Integer idInmueble) throws SystemException {
+        
+        BigInteger bi = null;
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append("Select i.cantidadFavoritos from inmueble i where i.idInmueble = ?");
+            pr = cn.prepareStatement(sb.toString());
+            pr.setInt(1, idInmueble);
+            pr.executeQuery();
+            
+            rs.next();
+            bi = BigInteger.valueOf(rs.getLong("cantidadFavoritos"));
+
+            
+            
+        } catch (Exception e) {
+        }
+        return bi;
+    }
+
+   
     
 }
