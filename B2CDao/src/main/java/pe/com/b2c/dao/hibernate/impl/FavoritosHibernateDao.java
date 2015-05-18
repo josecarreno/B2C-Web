@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import pe.com.b2c.dao.FavoritosDao;
 import pe.com.b2c.dao.entity.Favoritos;
 import pe.com.b2c.dao.base.BaseHibernateDao;
+import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.util.SystemException;
 
 public class FavoritosHibernateDao extends BaseHibernateDao implements FavoritosDao{
@@ -101,6 +102,23 @@ public class FavoritosHibernateDao extends BaseHibernateDao implements Favoritos
             cerrar(session);
         }
         return lista;
+    }
+
+    @Override
+    public void agregarInmuebleAFavoritos(Integer idUsuario, Integer idInmueble) throws SystemException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
+
+    @Override
+    public List<Inmueble> listarFavoritosUsuario(Integer idUsuario) throws SystemException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void eliminarFavorito(Integer idUsuario, Integer idInmueble) throws SystemException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
