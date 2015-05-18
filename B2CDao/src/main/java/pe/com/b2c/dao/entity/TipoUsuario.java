@@ -5,6 +5,7 @@
  */
 package pe.com.b2c.dao.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -44,8 +45,10 @@ public class TipoUsuario implements Serializable {
     @Column(name = "descripcion")
     private String descripcion;
     @Column(name = "eliminado")
+    @JsonIgnore
     private Boolean eliminado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoUsuario", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Usuario> usuarioList;
 
     public TipoUsuario() {

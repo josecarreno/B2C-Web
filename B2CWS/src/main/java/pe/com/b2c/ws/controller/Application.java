@@ -1,4 +1,4 @@
-package pe.com.b2c.ws.app;
+package pe.com.b2c.ws.controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

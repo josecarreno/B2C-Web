@@ -111,7 +111,7 @@ public class UsuarioJdbcDao extends BaseJdbcDao implements UsuarioDao{
         try{
            cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT * FROM b2cdb.usuario u JOIN b2cdb.tipousuario tu ON u.idTipoUsuario = tu.idTipoUsuario WHERE u.idUsuario = ? AND eliminado = 0");
+            sb.append("SELECT * FROM b2cdb.usuario u JOIN b2cdb.tipousuario tu ON u.idTipoUsuario = tu.idTipoUsuario WHERE u.idUsuario = ? AND u.eliminado = 0");
             pr = cn.prepareStatement(sb.toString());
             pr.setInt(1, id);
             rs = pr.executeQuery();
@@ -195,7 +195,7 @@ public class UsuarioJdbcDao extends BaseJdbcDao implements UsuarioDao{
             sb.append("ON u.idTipoUsuario = tu.idTipoUsuario ");
             sb.append("WHERE u.usuario = ? ");
             sb.append("AND u.password = ? ");
-            sb.append("AND eliminado = 0");
+            sb.append("AND u.eliminado = 0");
             pr = cn.prepareStatement(sb.toString());
             pr.setString(1, usuario);
             pr.setString(2, password);
