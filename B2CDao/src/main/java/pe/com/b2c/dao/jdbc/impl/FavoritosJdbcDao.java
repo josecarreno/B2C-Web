@@ -13,6 +13,7 @@ import java.util.List;
 import pe.com.b2c.dao.FavoritosDao;
 import pe.com.b2c.dao.base.BaseJdbcDao;
 import pe.com.b2c.dao.entity.Favoritos;
+import pe.com.b2c.dao.entity.Imagen;
 import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.dao.entity.TipoInmueble;
 import pe.com.b2c.dao.entity.TipoTransaccion;
@@ -154,6 +155,7 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
     public List<Inmueble> listarFavoritosUsuario(Integer idUsuario) throws SystemException {
         
         List<Inmueble> lista = new ArrayList<Inmueble>();
+        
         try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
@@ -174,6 +176,7 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
                 i.setLongitud(rs.getBigDecimal("longitud"));
                 i.setDescripcion(rs.getString("descripcion"));
                 i.setPrecio(rs.getBigDecimal("precio"));
+                i.setImagenList(obtenerImagenesDeInmueble(i.getIdInmueble()));
                 
                 i.setIdUsuario(new Usuario());
                 i.getIdUsuario().setIdUsuario(rs.getInt("idUsuario"));
@@ -287,6 +290,42 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
         } catch (Exception e) {
         }
         return bi;
+    }
+    
+    private List<Imagen> obtenerImagenesDeInmueble(Integer idInmueble) throws SystemException {
+        List<Imagen> lstImg = new ArrayList<>();
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append("SELECT img.*");
+            sb.append("FROM ");
+            sb.append("inmueble i, imagen img ");
+            sb.append("WHERE ");
+            sb.append("img.idInmueble = ? AND ");
+            sb.append("img.eliminado = 0 ");
+            pr = cn.prepareStatement(sb.toString());
+            pr.setInt(1, idInmueble);
+            rs = pr.executeQuery();
+            
+            while (rs.next()) {
+                Imagen img = new Imagen();
+                img.setIdImagen(rs.getInt("idImagen"));
+                img.setImgBlob(rs.getBytes("imgBlob"));
+                
+                Inmueble i = new Inmueble();
+                i.setIdInmueble(rs.getInt("idInmueble"));
+                //no seteo los demas elementos de inmueble para evitar recursion
+                
+                img.setIdInmueble(i);
+                img.setEliminado(Boolean.FALSE);
+                
+                lstImg.add(img);
+            }
+            
+        } catch (Exception ex) {
+            throw new SystemException(ex);
+        }
+        
+        return lstImg;
     }
 
    
