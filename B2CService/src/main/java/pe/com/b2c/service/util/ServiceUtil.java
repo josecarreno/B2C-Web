@@ -8,6 +8,7 @@ import pe.com.b2c.dao.hibernate.impl.TipoInmuebleHibernateDao;
 import pe.com.b2c.dao.hibernate.impl.TipoTransaccionHibernateDao;
 import pe.com.b2c.dao.hibernate.impl.TipoUsuarioHibernateDao;
 import pe.com.b2c.dao.hibernate.impl.UsuarioHibernateDao;
+import pe.com.b2c.dao.jdbc.impl.FavoritosJdbcDao;
 import pe.com.b2c.dao.jdbc.impl.InmuebleJdbcDao;
 import pe.com.b2c.dao.jdbc.impl.TipoInmuebleJdbcDao;
 import pe.com.b2c.dao.jdbc.impl.TipoTransaccionJdbcDao;
@@ -40,7 +41,7 @@ public final class ServiceUtil {
                     break;
                 case "JDBC":
                     //TODO cambiar a JDBC
-                    entityDao = FavoritosHibernateDao.obtenerInstancia();
+                    entityDao = FavoritosJdbcDao.obtenerInstancia();
                     break;
                 default:
                     entityDao = FavoritosHibernateDao.obtenerInstancia();

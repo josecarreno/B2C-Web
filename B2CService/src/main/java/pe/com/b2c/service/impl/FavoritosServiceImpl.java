@@ -3,6 +3,7 @@ package pe.com.b2c.service.impl;
 import java.util.List;
 import pe.com.b2c.dao.FavoritosDao;
 import pe.com.b2c.dao.entity.Favoritos;
+import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.service.FavoritosService;
 import pe.com.b2c.service.util.ServiceUtil;
 import pe.com.b2c.util.SystemException;
@@ -49,6 +50,21 @@ public class FavoritosServiceImpl implements FavoritosService{
     @Override
     public List<Favoritos> listar() throws SystemException {
         return favoritosDao.listar();
+    }
+
+    @Override
+    public void agregarInmuebleAFavoritos(Integer idUsuario, Integer idInmueble) throws SystemException {
+        favoritosDao.agregarInmuebleAFavoritos(idUsuario, idInmueble);
+    }
+
+    @Override
+    public void eliminarFavorito(Integer idUsuario, Integer idInmueble) throws SystemException {
+        favoritosDao.eliminarFavorito(idUsuario, idInmueble);
+    }
+
+    @Override
+    public List<Inmueble> listarFavoritosUsuario(Integer idUsuario) throws SystemException {
+       return favoritosDao.listarFavoritosUsuario(idUsuario);
     }
     
 }

@@ -23,9 +23,9 @@ import pe.com.b2c.util.SystemException;
  *
  * @author Renato
  */
-public class ImagenJdbcDao extends BaseJdbcDao implements ImagenDao{
+public class ImagenJdbcDao extends BaseJdbcDao implements ImagenDao {
 
-     private static final ImagenJdbcDao IMAGEN_DAO_IMPL;
+    private static final ImagenJdbcDao IMAGEN_DAO_IMPL;
 
     static {
         IMAGEN_DAO_IMPL = new ImagenJdbcDao();
@@ -38,35 +38,35 @@ public class ImagenJdbcDao extends BaseJdbcDao implements ImagenDao{
     public static ImagenJdbcDao obtenerInstancia() {
         return IMAGEN_DAO_IMPL;
     }
-    
+
     @Override
     public void insertar(Imagen e) throws SystemException {
         try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
             sb.append("INSERT INTO imagen(imgBlob, idInmueble, eliminado) VALUES(?,?,?)");
-            pr = cn.prepareStatement(sb.toString(), 
+            pr = cn.prepareStatement(sb.toString(),
                     PreparedStatement.RETURN_GENERATED_KEYS);
             pr.setBytes(1, e.getImgBlob());
             pr.setInt(2, e.getIdInmueble().getIdInmueble());
             pr.setBoolean(3, false);
-           
+
             pr.executeUpdate();
             //Obtener las claves autogeneradas
             rs = pr.getGeneratedKeys();
             rs.next();
             e.setIdImagen(rs.getInt(1));
-            
+
         } catch (Exception ex) {
             throw new SystemException(ex);
-        } finally{
+        } finally {
             cerrar(cn, pr, rs);
         }
     }
 
     @Override
     public void actualizar(Imagen e) throws SystemException {
-        try{
+        try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
             sb.append("UPDATE imagen SET ");
@@ -76,11 +76,11 @@ public class ImagenJdbcDao extends BaseJdbcDao implements ImagenDao{
             pr = cn.prepareStatement(sb.toString());
             pr.setBytes(1, e.getImgBlob());
             pr.setInt(2, e.getIdImagen());
-            
+
             pr.executeUpdate();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             throw new SystemException(ex);
-        } finally{
+        } finally {
             cerrar(cn, pr);
         }
     }
@@ -90,7 +90,7 @@ public class ImagenJdbcDao extends BaseJdbcDao implements ImagenDao{
         try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
-            
+
             sb.append("UPDATE imagen SET ");
             sb.append("eliminado = ? ");
             sb.append("WHERE ");
@@ -101,7 +101,7 @@ public class ImagenJdbcDao extends BaseJdbcDao implements ImagenDao{
             pr.executeUpdate();
         } catch (Exception e) {
             throw new SystemException(e);
-        }finally{
+        } finally {
             cerrar(cn, pr);
         }
     }
@@ -109,23 +109,23 @@ public class ImagenJdbcDao extends BaseJdbcDao implements ImagenDao{
     @Override
     public Imagen obtener(Integer id) throws SystemException {
         Imagen imagen = null;
-        
+
         try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT * FROM imagen i JOIN inmueble inm ON i.idInmueble = inm.idInmueble WHERE i.idImagen = ? AND i.eliminado = 0"); 
+            sb.append("SELECT * FROM imagen i JOIN inmueble inm ON i.idInmueble = inm.idInmueble WHERE i.idImagen = ? AND i.eliminado = 0");
             pr = cn.prepareStatement(sb.toString());
             pr.setInt(1, id);
             rs = pr.executeQuery();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 Imagen u = new Imagen();
                 u.setIdImagen(rs.getInt("idImagen"));
                 u.setImgBlob(rs.getBytes("imgBlob"));
-                
+
                 u.setIdInmueble(new Inmueble());
                 u.getIdInmueble().setIdInmueble(rs.getInt("idInmueble"));
-                
+
                 u.setIdInmueble(new Inmueble());
                 u.getIdInmueble().setIdInmueble(rs.getInt("idInmueble"));
                 u.getIdInmueble().setTitulo(rs.getString("titulo"));
@@ -135,7 +135,7 @@ public class ImagenJdbcDao extends BaseJdbcDao implements ImagenDao{
                 u.getIdInmueble().setLongitud(rs.getBigDecimal("longitud"));
                 u.getIdInmueble().setDescripcion(rs.getString("descripcion"));
                 u.getIdInmueble().setPrecio(rs.getBigDecimal("precio"));
-                
+
                 //Parametros del usuario
                 u.getIdInmueble().setIdUsuario(new Usuario());
                 u.getIdInmueble().getIdUsuario().setIdUsuario(rs.getInt("idUsuario"));
@@ -147,66 +147,61 @@ public class ImagenJdbcDao extends BaseJdbcDao implements ImagenDao{
                 u.getIdInmueble().getIdUsuario().setDireccion(rs.getString("direccion"));
                 u.getIdInmueble().getIdUsuario().setWeb(rs.getString("web"));
                 u.getIdInmueble().getIdUsuario().setTelefono(rs.getString("telefono"));
-                
+
                 //Parametros tipo usuario para el usuario
                 u.getIdInmueble().getIdUsuario().setIdTipoUsuario(new TipoUsuario());;
                 u.getIdInmueble().getIdUsuario().getIdTipoUsuario().setIdTipoUsuario(rs.getInt("idTipoUsuario"));
                 u.getIdInmueble().getIdUsuario().getIdTipoUsuario().setDescripcion(rs.getString("descripcion"));
                 u.getIdInmueble().getIdUsuario().getIdTipoUsuario().setEliminado(rs.getBoolean("eliminado"));
-                
+
                 //Sigue Parametros Inmueble
                 u.getIdInmueble().setIdTipoTransaccion(new TipoTransaccion());
                 u.getIdInmueble().getIdTipoTransaccion().setIdtipotransaccion(rs.getInt("idTipoTransaccion"));
                 u.getIdInmueble().getIdTipoTransaccion().setDescripcion(rs.getString("descripcion"));
                 u.getIdInmueble().getIdTipoTransaccion().setEliminado(rs.getBoolean("eliminado"));
-                
+
                 BigInteger bi = BigInteger.valueOf(rs.getLong("cantidadFavoritos"));
-                
+
                 u.getIdInmueble().setCantidadFavoritos(bi);
                 u.getIdInmueble().setFechaCreacion(rs.getDate("fechaCreacion"));
                 u.getIdInmueble().setEliminado(rs.getBoolean("eliminado"));
-                
+
                 //Tipo Inmueble
                 u.getIdInmueble().setIdTipoInmueble(new TipoInmueble());
                 u.getIdInmueble().getIdTipoInmueble().setIdTipoInmueble(rs.getInt("idTipoInmueble"));
                 u.getIdInmueble().getIdTipoInmueble().setDescripcion(rs.getString("descripcion"));
                 u.getIdInmueble().getIdTipoInmueble().setEliminado(rs.getBoolean("eliminado"));
-                
-                
+
                 u.setEliminado(rs.getBoolean("eliminado"));
-                
-                
+
             }
-            
-            
+
         } catch (Exception e) {
             throw new SystemException(e);
+        } finally {
+            cerrar(cn, pr, rs);
         }
-        
-        finally{
-             cerrar(cn, pr, rs);
-        }
-        
+
         return imagen;
     }
 
     @Override
     public List<Imagen> listar() throws SystemException {
         List<Imagen> lista = new ArrayList<Imagen>();
-      try {
+        try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT * FROM imagen i JOIN inmueble inm ON i.idInmueble = inm.idInmueble WHERE i.eliminado = 0"); 
+            sb.append("SELECT * FROM imagen i JOIN inmueble inm ON i.idInmueble = inm.idInmueble WHERE i.eliminado = 0");
             pr = cn.prepareStatement(sb.toString());
             rs = pr.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Imagen u = new Imagen();
                 u.setIdImagen(rs.getInt("idImagen"));
                 u.setImgBlob(rs.getBytes("imgBlob"));
-                
+
                 u.setIdInmueble(new Inmueble());
                 u.getIdInmueble().setIdInmueble(rs.getInt("idInmueble"));
-                
+
                 u.setIdInmueble(new Inmueble());
                 u.getIdInmueble().setIdInmueble(rs.getInt("idInmueble"));
                 u.getIdInmueble().setTitulo(rs.getString("titulo"));
@@ -216,7 +211,7 @@ public class ImagenJdbcDao extends BaseJdbcDao implements ImagenDao{
                 u.getIdInmueble().setLongitud(rs.getBigDecimal("longitud"));
                 u.getIdInmueble().setDescripcion(rs.getString("descripcion"));
                 u.getIdInmueble().setPrecio(rs.getBigDecimal("precio"));
-                
+
                 //Parametros del usuario
                 u.getIdInmueble().setIdUsuario(new Usuario());
                 u.getIdInmueble().getIdUsuario().setIdUsuario(rs.getInt("idUsuario"));
@@ -228,43 +223,41 @@ public class ImagenJdbcDao extends BaseJdbcDao implements ImagenDao{
                 u.getIdInmueble().getIdUsuario().setDireccion(rs.getString("direccion"));
                 u.getIdInmueble().getIdUsuario().setWeb(rs.getString("web"));
                 u.getIdInmueble().getIdUsuario().setTelefono(rs.getString("telefono"));
-                
+
                 //Parametros tipo usuario para el usuario
                 u.getIdInmueble().getIdUsuario().setIdTipoUsuario(new TipoUsuario());;
                 u.getIdInmueble().getIdUsuario().getIdTipoUsuario().setIdTipoUsuario(rs.getInt("idTipoUsuario"));
                 u.getIdInmueble().getIdUsuario().getIdTipoUsuario().setDescripcion(rs.getString("descripcion"));
                 u.getIdInmueble().getIdUsuario().getIdTipoUsuario().setEliminado(rs.getBoolean("eliminado"));
-                
+
                 //Sigue Parametros Inmueble
                 u.getIdInmueble().setIdTipoTransaccion(new TipoTransaccion());
                 u.getIdInmueble().getIdTipoTransaccion().setIdtipotransaccion(rs.getInt("idTipoTransaccion"));
                 u.getIdInmueble().getIdTipoTransaccion().setDescripcion(rs.getString("descripcion"));
                 u.getIdInmueble().getIdTipoTransaccion().setEliminado(rs.getBoolean("eliminado"));
-                
-                
+
                 BigInteger bi = BigInteger.valueOf(rs.getLong("cantidadFavoritos"));
                 u.getIdInmueble().setCantidadFavoritos(bi);
-                
+
                 u.getIdInmueble().setFechaCreacion(rs.getDate("fechaCreacion"));
                 u.getIdInmueble().setEliminado(rs.getBoolean("eliminado"));
-                
+
                 //Tipo Inmueble
                 u.getIdInmueble().setIdTipoInmueble(new TipoInmueble());
                 u.getIdInmueble().getIdTipoInmueble().setIdTipoInmueble(rs.getInt("idTipoInmueble"));
                 u.getIdInmueble().getIdTipoInmueble().setDescripcion(rs.getString("descripcion"));
                 u.getIdInmueble().getIdTipoInmueble().setEliminado(rs.getBoolean("eliminado"));
-                
-                
+
                 u.setEliminado(rs.getBoolean("eliminado"));
                 lista.add(u);
-                
+
             }
         } catch (Exception ex) {
             throw new SystemException(ex);
-        } finally{
+        } finally {
             cerrar(cn, pr, rs);
         }
         return lista;
     }
-    
+
 }

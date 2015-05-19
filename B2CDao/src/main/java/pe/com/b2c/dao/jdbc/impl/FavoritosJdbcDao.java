@@ -25,6 +25,19 @@ import pe.com.b2c.util.SystemException;
  * @author Renato
  */
 public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
+    private static final FavoritosJdbcDao FAVORITOS_DAO_IMPL;
+
+    static {
+        FAVORITOS_DAO_IMPL = new FavoritosJdbcDao();
+    }
+
+    private FavoritosJdbcDao() {
+
+    }
+
+    public static FavoritosJdbcDao obtenerInstancia() {
+        return FAVORITOS_DAO_IMPL;
+    }
 
     @Override
     public void insertar(Favoritos e) throws SystemException {
@@ -144,8 +157,9 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
         try {
             cn = obtenerConexion();
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT * FROM favoritos f JOIN inmueble i ON f.idInmueble = i.idInmueble WHERE f.idUsuario = ?");
+            sb.append("SELECT * FROM inmueble i JOIN favoritos f ON i.idInmueble = f.idInmueble WHERE f.idUsuario = ? and i.eliminado = 0");
             pr = cn.prepareStatement(sb.toString());
+            pr.setInt(1, idUsuario);
             rs = pr.executeQuery();
             
             while(rs.next()){
@@ -163,7 +177,7 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
                 
                 i.setIdUsuario(new Usuario());
                 i.getIdUsuario().setIdUsuario(rs.getInt("idUsuario"));
-                i.getIdUsuario().setUsuario(rs.getString("usuario"));
+                /* i.getIdUsuario().setUsuario(rs.getString("usuario"));
                 i.getIdUsuario().setPassword(rs.getString("password"));
                 i.getIdUsuario().setNombre(rs.getString("nombre"));
                 i.getIdUsuario().setEmail(rs.getString("email"));
@@ -176,11 +190,12 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
                 i.getIdUsuario().getIdTipoUsuario().setIdTipoUsuario(rs.getInt("idTipoUsuario"));
                 i.getIdUsuario().getIdTipoUsuario().setDescripcion(rs.getString("descripcion"));
                 i.getIdUsuario().getIdTipoUsuario().setEliminado(rs.getBoolean("eliminado"));
-                
+                */
                 i.setIdTipoTransaccion(new TipoTransaccion());
                 i.getIdTipoTransaccion().setIdtipotransaccion(rs.getInt("idTipoTransaccion"));
+                /*
                 i.getIdTipoTransaccion().setDescripcion(rs.getString("descripcion"));
-                i.getIdTipoTransaccion().setEliminado(rs.getBoolean("eliminado"));
+                i.getIdTipoTransaccion().setEliminado(rs.getBoolean("eliminado")); */
                 
                 BigInteger bi = BigInteger.valueOf(rs.getLong("cantidadFavoritos"));
                 i.setCantidadFavoritos(bi);
@@ -190,11 +205,9 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
                 
                 i.setIdTipoInmueble(new TipoInmueble());
                 i.getIdTipoInmueble().setIdTipoInmueble(rs.getInt("idTipoInmueble"));
-                i.getIdTipoInmueble().setDescripcion(rs.getString("descripcion"));
-                i.getIdTipoInmueble().setEliminado(rs.getBoolean("eliminado"));
-                
-                i.setEliminado(rs.getBoolean("eliminado"));
-                
+                /*i.getIdTipoInmueble().setDescripcion(rs.getString("descripcion"));
+                i.getIdTipoInmueble().setEliminado(rs.getBoolean("eliminado"));*/
+                                
                 lista.add(i);
                 
                 
