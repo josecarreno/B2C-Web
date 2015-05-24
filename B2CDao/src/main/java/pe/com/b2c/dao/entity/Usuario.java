@@ -5,8 +5,6 @@
  */
 package pe.com.b2c.dao.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -51,7 +49,6 @@ public class Usuario implements Serializable {
     @Column(name = "usuario")
     private String usuario;
     @Column(name = "password")
-    @JsonIgnore
     private String password;
     @Column(name = "nombre")
     private String nombre;
@@ -66,17 +63,13 @@ public class Usuario implements Serializable {
     @Column(name = "telefono")
     private String telefono;
     @Column(name = "eliminado")
-    @JsonIgnore
     private Boolean eliminado;
     @JoinColumn(name = "idTipoUsuario", referencedColumnName = "idTipoUsuario")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JsonProperty("tipoUsuario")
     private TipoUsuario idTipoUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.LAZY)
-    @JsonIgnore
     private List<Inmueble> inmuebleList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.LAZY)
-    @JsonIgnore
     private List<Favoritos> favoritosList;
 
     public Usuario() {

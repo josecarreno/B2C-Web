@@ -5,7 +5,6 @@
  */
 package pe.com.b2c.dao.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -44,7 +43,6 @@ public class Imagen implements Serializable {
     @Column(name = "imgBlob")
     private byte[] imgBlob;
     @Column(name = "eliminado")
-    @JsonIgnore
     private Boolean eliminado;
     @JoinColumn(name = "idInmueble", referencedColumnName = "idInmueble")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

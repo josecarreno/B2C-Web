@@ -5,7 +5,6 @@
  */
 package pe.com.b2c.dao.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -78,7 +77,6 @@ public class Inmueble implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
     @Column(name = "eliminado")
-    @JsonIgnore
     private Boolean eliminado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.LAZY)
     private List<Imagen> imagenList;
