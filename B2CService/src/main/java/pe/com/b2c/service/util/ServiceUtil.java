@@ -32,7 +32,7 @@ public final class ServiceUtil {
     public static EntityDao obtenerDao(String tabla) {
 
         EntityDao entityDao = null;
-        String tipoConexion = "JDBC"; //cambiar segun sea necesario
+        String tipoConexion = "HIBERNATE"; //cambiar segun sea necesario
 
         if (tabla.equalsIgnoreCase(FAVORITOS)) {
             switch (tipoConexion) {

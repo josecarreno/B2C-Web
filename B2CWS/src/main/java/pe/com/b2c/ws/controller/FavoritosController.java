@@ -11,8 +11,10 @@ import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.service.FavoritosService;
 import pe.com.b2c.util.SystemException;
 import pe.com.b2c.ws.constants.FavoritosURIConstants;
+import pe.com.b2c.ws.util.ListUtil;
 import pe.com.b2c.ws.util.WSUtil;
 import pe.com.b2c.ws.wrapper.FavoritosWrapper;
+import pe.com.b2c.ws.wrapper.InmuebleSimpleWrapper;
 import pe.com.b2c.ws.wrapper.Respuesta;
 
 @RestController
@@ -41,8 +43,8 @@ public class FavoritosController {
             method = RequestMethod.GET, 
             produces = "Application/json")
     public @ResponseBody
-    List<Inmueble> getFavoritos(@PathVariable("idUsuario") Integer id) throws SystemException{
+    List<InmuebleSimpleWrapper> getFavoritos(@PathVariable("idUsuario") Integer id) throws SystemException{
         List<Inmueble> inmuebles = fs.listarFavoritosUsuario(id);
-        return inmuebles;
+        return ListUtil.getSimpleInmueble(inmuebles);
     }
 }

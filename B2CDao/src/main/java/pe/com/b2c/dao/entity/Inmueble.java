@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jose
+ * @author Jose
  */
 @Entity
 @Table(name = "inmueble")
@@ -78,18 +78,18 @@ public class Inmueble implements Serializable {
     private Date fechaCreacion;
     @Column(name = "eliminado")
     private Boolean eliminado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.EAGER)
     private List<Imagen> imagenList;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario idUsuario;
     @JoinColumn(name = "idTipoTransaccion", referencedColumnName = "idtipotransaccion")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private TipoTransaccion idTipoTransaccion;
     @JoinColumn(name = "idTipoInmueble", referencedColumnName = "idTipoInmueble")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private TipoInmueble idTipoInmueble;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.EAGER)
     private List<Favoritos> favoritosList;
 
     public Inmueble() {

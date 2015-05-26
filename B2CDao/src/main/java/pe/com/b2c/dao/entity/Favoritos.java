@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author jose
+ * @author Jose
  */
 @Entity
 @Table(name = "favoritos")
@@ -48,10 +48,10 @@ public class Favoritos implements Serializable {
     @Column(name = "eliminado")
     private Boolean eliminado;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario idUsuario;
     @JoinColumn(name = "idInmueble", referencedColumnName = "idInmueble")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Inmueble idInmueble;
 
     public Favoritos() {

@@ -19,6 +19,12 @@
             <artifactId>B2CDao</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.8.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>

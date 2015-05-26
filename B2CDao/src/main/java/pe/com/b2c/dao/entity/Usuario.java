@@ -24,6 +24,10 @@ import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ *
+ * @author Jose
+ */
 @Entity
 @Table(name = "usuario")
 @XmlRootElement
@@ -65,11 +69,11 @@ public class Usuario implements Serializable {
     @Column(name = "eliminado")
     private Boolean eliminado;
     @JoinColumn(name = "idTipoUsuario", referencedColumnName = "idTipoUsuario")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private TipoUsuario idTipoUsuario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.EAGER)
     private List<Inmueble> inmuebleList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario", fetch = FetchType.EAGER)
     private List<Favoritos> favoritosList;
 
     public Usuario() {

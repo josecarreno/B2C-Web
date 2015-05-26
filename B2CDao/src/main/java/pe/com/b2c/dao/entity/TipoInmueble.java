@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author jose
+ * @author Jose
  */
 @Entity
 @Table(name = "tipoinmueble")
@@ -45,7 +45,7 @@ public class TipoInmueble implements Serializable {
     private String descripcion;
     @Column(name = "eliminado")
     private Boolean eliminado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoInmueble", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoInmueble", fetch = FetchType.EAGER)
     private List<Inmueble> inmuebleList;
 
     public TipoInmueble() {

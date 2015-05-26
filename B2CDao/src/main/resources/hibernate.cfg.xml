@@ -17,6 +17,6 @@
     <mapping class="pe.com.b2c.dao.entity.TipoTransaccion"/>
     <mapping class="pe.com.b2c.dao.entity.TipoUsuario"/>
     <mapping class="pe.com.b2c.dao.entity.Usuario"/>
-    
+
   </session-factory>
 </hibernate-configuration>
