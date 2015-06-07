@@ -8,24 +8,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.service.InmuebleService;
 import pe.com.b2c.util.SystemException;
 import pe.com.b2c.ws.constants.InmuebleURIConstants;
+import pe.com.b2c.ws.util.ListUtil;
 import pe.com.b2c.ws.util.WSUtil;
+import pe.com.b2c.ws.wrapper.InmuebleInWrapper;
+import pe.com.b2c.ws.wrapper.InmuebleOutWrapper;
+import pe.com.b2c.ws.wrapper.InmuebleSimpleWrapper;
 import pe.com.b2c.ws.wrapper.Respuesta;
 
 @RestController
 public class InmuebleController {
-    private InmuebleService is = 
+    private final InmuebleService is = 
             (InmuebleService) WSUtil.obtenerService("INMUEBLE");
     
     @RequestMapping(value = InmuebleURIConstants.GET_INMUEBLE, 
             method = RequestMethod.GET, 
             produces = "Application/json")
     public @ResponseBody
-    Inmueble getInmueble(@PathVariable("idInmueble") Integer id) throws SystemException {
-        Inmueble i = is.obtener(id);
+    InmuebleOutWrapper getInmueble(@PathVariable("idInmueble") Integer id) 
+            throws SystemException {
+        InmuebleOutWrapper i = new InmuebleOutWrapper(is.obtener(id));
         return i;
     }
     
@@ -33,8 +37,9 @@ public class InmuebleController {
             method = RequestMethod.GET, 
             produces = "Application/json")
     public @ResponseBody
-    List<Inmueble> getAllInmuebles() throws SystemException{
-        List<Inmueble> inmuebles = is.listar();
+    List<InmuebleSimpleWrapper> getAllInmuebles() throws SystemException{
+        List<InmuebleSimpleWrapper> inmuebles = 
+                ListUtil.getListSimpleInmueble(is.listar());
         return inmuebles;
     }
 
@@ -42,8 +47,8 @@ public class InmuebleController {
             method = RequestMethod.POST,
             produces = "Application/json")
     public @ResponseBody
-    Respuesta createInmueble(@RequestBody Inmueble i) throws SystemException{
-        is.insertar(i);
+    Respuesta createInmueble(@RequestBody InmuebleInWrapper i) throws SystemException{
+        is.insertar(i.getEntity());
         return new Respuesta("Inmueble creado correctamente");
     }
     
@@ -51,8 +56,8 @@ public class InmuebleController {
             method = RequestMethod.POST,
             produces = "Application/json")
     public @ResponseBody
-    Respuesta updateInmueble(@RequestBody Inmueble i) throws SystemException{
-        is.actualizar(i);
+    Respuesta updateInmueble(@RequestBody InmuebleInWrapper i) throws SystemException{
+        is.actualizar(i.getEntity());
         return (new Respuesta("Se actualizo el inmueble correctamente"));
     }
     

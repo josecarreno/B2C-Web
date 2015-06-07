@@ -45,6 +45,6 @@ public class FavoritosController {
     public @ResponseBody
     List<InmuebleSimpleWrapper> getFavoritos(@PathVariable("idUsuario") Integer id) throws SystemException{
         List<Inmueble> inmuebles = fs.listarFavoritosUsuario(id);
-        return ListUtil.getSimpleInmueble(inmuebles);
+        return ListUtil.getListSimpleInmueble(inmuebles);
     }
 }

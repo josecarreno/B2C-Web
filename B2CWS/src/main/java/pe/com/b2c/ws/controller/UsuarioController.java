@@ -15,56 +15,59 @@ import pe.com.b2c.service.UsuarioService;
 import pe.com.b2c.util.SystemException;
 import pe.com.b2c.ws.util.WSUtil;
 import pe.com.b2c.ws.wrapper.Respuesta;
+import pe.com.b2c.ws.wrapper.UsuarioInWrapper;
+import pe.com.b2c.ws.wrapper.UsuarioOutWrapper;
 import pe.com.b2c.ws.wrapper.ValidaUsuario;
 
 @RestController
 public class UsuarioController {
 
     private UsuarioService us = (UsuarioService) WSUtil.obtenerService("USUARIO");
-    
-    @RequestMapping(value = UsuarioURIConstants.GET_USER, 
-            method = RequestMethod.GET, 
+
+    @RequestMapping(value = UsuarioURIConstants.GET_USER,
+            method = RequestMethod.GET,
             produces = "Application/json")
     public @ResponseBody
-    Usuario getUsuario(@PathVariable("idUsuario") Integer id) throws SystemException {
-        Usuario u = us.obtener(id);
+    UsuarioOutWrapper getUsuario(@PathVariable("idUsuario") Integer id) throws SystemException {
+        UsuarioOutWrapper u = new UsuarioOutWrapper(us.obtener(id));
         return u;
     }
-    
-    @RequestMapping(value = UsuarioURIConstants.GET_ALL_USER, 
-            method = RequestMethod.GET, 
+
+    @RequestMapping(value = UsuarioURIConstants.GET_ALL_USER,
+            method = RequestMethod.GET,
             produces = "Application/json")
     public @ResponseBody
-    List<Usuario> getAllUsuarios() throws SystemException{
+    List<Usuario> getAllUsuarios() throws SystemException {
         List<Usuario> users = us.listar();
         return users;
     }
 
-    @RequestMapping(value = UsuarioURIConstants.CREATE_USER, 
+    @RequestMapping(value = UsuarioURIConstants.CREATE_USER,
             method = RequestMethod.POST,
             produces = "Application/json")
     public @ResponseBody
-    void createUsuario(@RequestBody Usuario u) throws SystemException{
-        us.insertar(u);
+    void createUsuario(@RequestBody UsuarioInWrapper u) throws SystemException {
+        us.insertar(u.getEntity());
     }
-    
-    @RequestMapping(value = UsuarioURIConstants.UPDATE_USER, 
+
+    @RequestMapping(value = UsuarioURIConstants.UPDATE_USER,
             method = RequestMethod.POST,
             produces = "Application/json")
     public @ResponseBody
-    Respuesta updateUsuario(@RequestBody Usuario u) throws SystemException{
-        us.actualizar(u);
+    Respuesta updateUsuario(@RequestBody UsuarioInWrapper u) throws SystemException {
+        us.actualizar(u.getEntity());
         return (new Respuesta("Se actualizo el usuario correctamente"));
     }
 
-    @RequestMapping(value = UsuarioURIConstants.LOGIN_USER, 
+    @RequestMapping(value = UsuarioURIConstants.LOGIN_USER,
             method = RequestMethod.POST,
             consumes = "Application/json",
             produces = "Application/json")
     public @ResponseBody
-    Usuario loginUsuario(@RequestBody ValidaUsuario vu)
-            throws SystemException{
-        return us.validarUsuario(vu.getUsuario(), vu.getPassword());
+    UsuarioOutWrapper loginUsuario(@RequestBody ValidaUsuario vu)
+            throws SystemException {
+        return new UsuarioOutWrapper(us.validarUsuario(
+                vu.getUsuario(), vu.getPassword()));
     }
-    
+
 }
