@@ -11,14 +11,6 @@ import pe.com.b2c.dao.entity.Usuario;
 
 public class InmuebleInWrapper {
 
-    public Integer getIdInmueble() {
-        return idInmueble;
-    }
-
-    public void setIdInmueble(Integer idInmueble) {
-        this.idInmueble = idInmueble;
-    }
-    
     private Integer idInmueble;
 
     private String titulo;
@@ -44,8 +36,30 @@ public class InmuebleInWrapper {
     private Integer idTipoTransaccion;
 
     private Integer idTipoInmueble;
+    
+    private BigDecimal areaTotal;
+    
+    private BigDecimal areaConstruida;
+    
+    private BigDecimal precioDolares;
+    
+    private BigDecimal precioSoles;
+    
+    private Integer dormitorios;
+    
+    private Integer banos;
+    
+    private Integer antiguedad;
 
     private List<ImagenWrapper> imagenList;
+
+    public Integer getIdInmueble() {
+        return idInmueble;
+    }
+
+    public void setIdInmueble(Integer idInmueble) {
+        this.idInmueble = idInmueble;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -151,6 +165,62 @@ public class InmuebleInWrapper {
         this.imagenList = imagenList;
     }
 
+    public BigDecimal getAreaTotal() {
+        return areaTotal;
+    }
+
+    public void setAreaTotal(BigDecimal areaTotal) {
+        this.areaTotal = areaTotal;
+    }
+
+    public BigDecimal getAreaConstruida() {
+        return areaConstruida;
+    }
+
+    public void setAreaConstruida(BigDecimal areaConstruida) {
+        this.areaConstruida = areaConstruida;
+    }
+
+    public BigDecimal getPrecioDolares() {
+        return precioDolares;
+    }
+
+    public void setPrecioDolares(BigDecimal precioDolares) {
+        this.precioDolares = precioDolares;
+    }
+
+    public BigDecimal getPrecioSoles() {
+        return precioSoles;
+    }
+
+    public void setPrecioSoles(BigDecimal precioSoles) {
+        this.precioSoles = precioSoles;
+    }
+
+    public Integer getDormitorios() {
+        return dormitorios;
+    }
+
+    public void setDormitorios(Integer dormitorios) {
+        this.dormitorios = dormitorios;
+    }
+
+    public Integer getBanos() {
+        return banos;
+    }
+
+    public void setBanos(Integer banos) {
+        this.banos = banos;
+    }
+
+    public Integer getAntiguedad() {
+        return antiguedad;
+    }
+
+    public void setAntiguedad(Integer antiguedad) {
+        this.antiguedad = antiguedad;
+    }
+
     
     public Inmueble getEntity() {
         Inmueble i = new Inmueble();
@@ -161,21 +231,28 @@ public class InmuebleInWrapper {
         i.setDistrito(distrito);
         i.setEliminado(Boolean.FALSE);
         i.setFechaCreacion(fechaCreacion);
+        i.setAreaTotal(areaTotal);
+        i.setAreaConstruida(areaConstruida);
+        i.setPrecioDolares(precioDolares);
+        i.setPrecioSoles(precioSoles);
+        i.setDormitorios(dormitorios);
+        i.setBanos(banos);
+        i.setAntiguedad(antiguedad);
         
         TipoInmueble ti = new TipoInmueble();
         ti.setIdTipoInmueble(idTipoInmueble);
         i.setIdTipoInmueble(ti);
-        
+
         TipoTransaccion tt = new TipoTransaccion();
         tt.setIdtipotransaccion(idTipoTransaccion);
         i.setIdTipoTransaccion(tt);
-        
+
         Usuario u = new Usuario();
         u.setIdUsuario(idUsuario);
         i.setIdUsuario(u);
-        
+
         i.setImagenList(null);
-        
+
         return i;
     }
 }

@@ -36,6 +36,20 @@ public class InmuebleOutWrapper {
     private TipoTransaccionWrapper tipoTransaccion;
 
     private TipoInmuebleWrapper tipoInmueble;
+    
+    private BigDecimal areaTotal;
+    
+    private BigDecimal areaConstruida;
+    
+    private BigDecimal precioDolares;
+    
+    private BigDecimal precioSoles;
+    
+    private Integer dormitorios;
+    
+    private Integer banos;
+    
+    private Integer antiguedad;
 
     private List<ImagenWrapper> imagenList;
 
@@ -56,7 +70,14 @@ public class InmuebleOutWrapper {
         this.tipoTransaccion = new TipoTransaccionWrapper(i.getIdTipoTransaccion());
         this.titulo = i.getTitulo();
         this.usuario = i.getIdUsuario().getUsuario();
-        
+        this.areaTotal = i.getAreaTotal();
+        this.areaConstruida = i.getAreaConstruida();
+        this.precioSoles = i.getPrecioSoles();
+        this.precioDolares = i.getPrecioDolares();
+        this.dormitorios = i. getDormitorios();
+        this.banos = i.getBanos();
+        this.antiguedad = i.getAntiguedad();
+
     }
     
     public Integer getIdInmueble() {
@@ -178,5 +199,71 @@ public class InmuebleOutWrapper {
     public void setImagenList(List<ImagenWrapper> imagenList) {
         this.imagenList = imagenList;
     }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public BigDecimal getAreaTotal() {
+        return areaTotal;
+    }
+
+    public void setAreaTotal(BigDecimal areaTotal) {
+        this.areaTotal = areaTotal;
+    }
+
+    public BigDecimal getAreaConstruida() {
+        return areaConstruida;
+    }
+
+    public void setAreaConstruida(BigDecimal areaConstruida) {
+        this.areaConstruida = areaConstruida;
+    }
+
+    public BigDecimal getPrecioDolares() {
+        return precioDolares;
+    }
+
+    public void setPrecioDolares(BigDecimal precioDolares) {
+        this.precioDolares = precioDolares;
+    }
+
+    public BigDecimal getPrecioSoles() {
+        return precioSoles;
+    }
+
+    public void setPrecioSoles(BigDecimal precioSoles) {
+        this.precioSoles = precioSoles;
+    }
+
+    public Integer getDormitorios() {
+        return dormitorios;
+    }
+
+    public void setDormitorios(Integer dormitorios) {
+        this.dormitorios = dormitorios;
+    }
+
+    public Integer getBanos() {
+        return banos;
+    }
+
+    public void setBanos(Integer banos) {
+        this.banos = banos;
+    }
+
+    public Integer getAntiguedad() {
+        return antiguedad;
+    }
+
+    public void setAntiguedad(Integer antiguedad) {
+        this.antiguedad = antiguedad;
+    }
+    
+    
     
 }

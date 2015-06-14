@@ -48,7 +48,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Inmueble.findByPrecio", query = "SELECT i FROM Inmueble i WHERE i.precio = :precio"),
     @NamedQuery(name = "Inmueble.findByCantidadFavoritos", query = "SELECT i FROM Inmueble i WHERE i.cantidadFavoritos = :cantidadFavoritos"),
     @NamedQuery(name = "Inmueble.findByFechaCreacion", query = "SELECT i FROM Inmueble i WHERE i.fechaCreacion = :fechaCreacion"),
-    @NamedQuery(name = "Inmueble.findByEliminado", query = "SELECT i FROM Inmueble i WHERE i.eliminado = :eliminado")})
+    @NamedQuery(name = "Inmueble.findByEliminado", query = "SELECT i FROM Inmueble i WHERE i.eliminado = :eliminado"),
+    @NamedQuery(name = "Inmueble.findByAreaTotal", query = "SELECT i FROM Inmueble i WHERE i.areaTotal = :areaTotal"),
+    @NamedQuery(name = "Inmueble.findByAreaConstruida", query = "SELECT i FROM Inmueble i WHERE i.areaConstruida = :areaConstruida"),
+    @NamedQuery(name = "Inmueble.findByPrecioDolares", query = "SELECT i FROM Inmueble i WHERE i.precioDolares = :precioDolares"),
+    @NamedQuery(name = "Inmueble.findByPrecioSoles", query = "SELECT i FROM Inmueble i WHERE i.precioSoles = :precioSoles"),
+    @NamedQuery(name = "Inmueble.findByDormitorios", query = "SELECT i FROM Inmueble i WHERE i.dormitorios = :dormitorios"),
+    @NamedQuery(name = "Inmueble.findByBanos", query = "SELECT i FROM Inmueble i WHERE i.banos = :banos"),
+    @NamedQuery(name = "Inmueble.findByAntiguedad", query = "SELECT i FROM Inmueble i WHERE i.antiguedad = :antiguedad")})
 public class Inmueble implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -78,6 +85,20 @@ public class Inmueble implements Serializable {
     private Date fechaCreacion;
     @Column(name = "eliminado")
     private Boolean eliminado;
+    @Column(name = "areaTotal")
+    private BigDecimal areaTotal;
+    @Column(name = "areaConstruida")
+    private BigDecimal areaConstruida;
+    @Column(name = "precioDolares")
+    private BigDecimal precioDolares;
+    @Column(name = "precioSoles")
+    private BigDecimal precioSoles;
+    @Column(name = "dormitorios")
+    private Integer dormitorios;
+    @Column(name = "banos")
+    private Integer banos;
+    @Column(name = "antiguedad")
+    private Integer antiguedad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idInmueble", fetch = FetchType.EAGER)
     private List<Imagen> imagenList;
     @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario")
@@ -185,6 +206,62 @@ public class Inmueble implements Serializable {
 
     public void setEliminado(Boolean eliminado) {
         this.eliminado = eliminado;
+    }
+
+    public BigDecimal getAreaTotal() {
+        return areaTotal;
+    }
+
+    public void setAreaTotal(BigDecimal areaTotal) {
+        this.areaTotal = areaTotal;
+    }
+
+    public BigDecimal getAreaConstruida() {
+        return areaConstruida;
+    }
+
+    public void setAreaConstruida(BigDecimal areaConstruida) {
+        this.areaConstruida = areaConstruida;
+    }
+
+    public BigDecimal getPrecioDolares() {
+        return precioDolares;
+    }
+
+    public void setPrecioDolares(BigDecimal precioDolares) {
+        this.precioDolares = precioDolares;
+    }
+
+    public BigDecimal getPrecioSoles() {
+        return precioSoles;
+    }
+
+    public void setPrecioSoles(BigDecimal precioSoles) {
+        this.precioSoles = precioSoles;
+    }
+
+    public Integer getDormitorios() {
+        return dormitorios;
+    }
+
+    public void setDormitorios(Integer dormitorios) {
+        this.dormitorios = dormitorios;
+    }
+
+    public Integer getBanos() {
+        return banos;
+    }
+
+    public void setBanos(Integer banos) {
+        this.banos = banos;
+    }
+
+    public Integer getAntiguedad() {
+        return antiguedad;
+    }
+
+    public void setAntiguedad(Integer antiguedad) {
+        this.antiguedad = antiguedad;
     }
 
     @XmlTransient
