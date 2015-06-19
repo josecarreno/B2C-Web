@@ -46,8 +46,13 @@ public class UsuarioController {
             method = RequestMethod.POST,
             produces = "Application/json")
     public @ResponseBody
-    void createUsuario(@RequestBody UsuarioInWrapper u) throws SystemException {
-        us.insertar(u.getEntity());
+    Respuesta createUsuario(@RequestBody UsuarioInWrapper u) throws SystemException {
+        if (("").equalsIgnoreCase(u.getUsuario()) || 
+                ("").equalsIgnoreCase(u.getPassword())) {
+            throw new IllegalArgumentException();
+        }
+        us.insertar(u.getEntity()); 
+        return new Respuesta("Usuario creado correctamente");
     }
 
     @RequestMapping(value = UsuarioURIConstants.UPDATE_USER,
@@ -66,8 +71,9 @@ public class UsuarioController {
     public @ResponseBody
     UsuarioOutWrapper loginUsuario(@RequestBody ValidaUsuario vu)
             throws SystemException {
-        return new UsuarioOutWrapper(us.validarUsuario(
-                vu.getUsuario(), vu.getPassword()));
+        Usuario u = us.validarUsuario(vu.getUsuario(), vu.getPassword());   
+        UsuarioOutWrapper uo = new UsuarioOutWrapper(u);
+        return uo;
     }
 
 }

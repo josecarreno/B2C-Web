@@ -106,7 +106,22 @@ public class UsuarioHibernateDao extends BaseHibernateDao implements UsuarioDao{
 
     @Override
     public Usuario validarUsuario(String usuario, String password) throws SystemException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Session session = null;
+        List<Usuario> lista = null;
+        try {
+            session = obtenerSesion();
+            String hql = "SELECT u FROM Usuario u "
+                    + "WHERE u.eliminado = 0 AND "
+                    + "u.usuario = :usuario AND "
+                    + "u.password = :password";
+            Query query = session.createQuery(hql)
+                    .setString("usuario", usuario)
+                    .setString("password", password);
+            lista = query.list();
+        } finally {
+            cerrar(session);
+        }
+        return lista.get(0);
     }
     
 }

@@ -1,7 +1,10 @@
 package pe.com.b2c.ws.wrapper;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import pe.com.b2c.dao.entity.Usuario;
 
+@JsonAutoDetect
 public class UsuarioOutWrapper {
     
     private Integer idUsuario;
@@ -12,7 +15,8 @@ public class UsuarioOutWrapper {
     private String direccion;
     private String web;
     private String telefono;
-    private TipoUsuarioWrapper tipoUsuario;
+    private Integer idTipoUsuario;
+    private String tipoUsuario;
 
     public UsuarioOutWrapper(Usuario u) {
         this.idUsuario = u.getIdUsuario();
@@ -23,7 +27,8 @@ public class UsuarioOutWrapper {
         this.direccion = u.getDireccion();
         this.web = u.getWeb();
         this.telefono = u.getTelefono();
-        this.tipoUsuario = new TipoUsuarioWrapper(u.getIdTipoUsuario());
+        this.idTipoUsuario = u.getIdTipoUsuario().getIdTipoUsuario();
+        this.tipoUsuario = u.getIdTipoUsuario().getDescripcion();
     }
 
     public Integer getIdUsuario() {
@@ -90,12 +95,20 @@ public class UsuarioOutWrapper {
         this.telefono = telefono;
     }
 
-    public TipoUsuarioWrapper getTipoUsuario() {
+    public Integer getIdTipoUsuario() {
+        return idTipoUsuario;
+    }
+
+    public void setIdTipoUsuario(Integer idTipoUsuario) {
+        this.idTipoUsuario = idTipoUsuario;
+    }
+
+    public String getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipoUsuario(TipoUsuarioWrapper tipoUsuario) {
+    public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
-    
+   
 }
