@@ -156,7 +156,8 @@ public class FavoritosHibernateDao extends BaseHibernateDao implements Favoritos
             usuario = (Usuario) session.get(Usuario.class, idUsuario);
             lista = new ArrayList<>();
             for (Favoritos f : usuario.getFavoritosList()) {
-                lista.add(f.getIdInmueble());
+                if (!lista.contains(f.getIdInmueble()))
+                    lista.add(f.getIdInmueble());
             }
 
         } finally {
