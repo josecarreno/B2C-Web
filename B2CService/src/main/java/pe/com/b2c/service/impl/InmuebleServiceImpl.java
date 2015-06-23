@@ -50,4 +50,9 @@ public class InmuebleServiceImpl implements InmuebleService{
     public List<Inmueble> listar() throws SystemException {
         return inmuebleDao.listar();
     }  
+
+    @Override
+    public List<Inmueble> listarPaginado(String sort, String search) {
+        return inmuebleDao.listarPaginado(sort, search);
+    }
 }

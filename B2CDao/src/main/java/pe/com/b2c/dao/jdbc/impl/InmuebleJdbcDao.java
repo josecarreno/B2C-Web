@@ -333,4 +333,9 @@ public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {
         }
         return lista;
     }
+
+    @Override
+    public List<Inmueble> listarPaginado(String sort, String search) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

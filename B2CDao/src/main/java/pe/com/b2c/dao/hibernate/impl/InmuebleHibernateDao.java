@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import pe.com.b2c.dao.InmuebleDao;
 import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.dao.base.BaseHibernateDao;
-import pe.com.b2c.dao.entity.Imagen;
 import pe.com.b2c.util.SystemException;
 
 public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDao{
@@ -99,6 +98,38 @@ public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDa
             session = obtenerSesion();
             String hql = "SELECT i FROM Inmueble i WHERE i.eliminado = 0";
             Query query = session.createQuery(hql);
+            lista = query.list();
+        } finally {
+            cerrar(session);
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Inmueble> listarPaginado(String sort, String search) {
+        Session session = null;
+        List<Inmueble> lista = null;
+        StringBuilder sb = new StringBuilder();
+        if (null == sort || ("").equals(sort)) {
+            sort = "fechaCreacion";
+        } else if ("departamento".equalsIgnoreCase(sort)) {
+            sort = "idDepartamento.nombre";
+        }
+        try {
+            session = obtenerSesion();
+            sb.append("SELECT i FROM Inmueble i WHERE ");
+            sb.append("(i.eliminado = 0)");
+            sb.append(" AND (:search is null");
+            sb.append(" OR ( CONCAT(titulo, ' ', direccion, ' ', distrito, ' ', descripcion )"); 
+            sb.append(" LIKE '%' || :search || '%')");
+            sb.append(")");
+            sb.append(" ORDER BY i.");
+            sb.append(sort);
+            sb.append(" ");
+            sb.append("DESC");
+            String hql = sb.toString();
+            Query query = session.createQuery(hql)
+                    .setParameter("search", search);
             lista = query.list();
         } finally {
             cerrar(session);

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pe.com.b2c.dao.entity.Imagen;
@@ -81,4 +82,18 @@ public class InmuebleController {
         is.eliminar(id);
         return (new Respuesta("Se elimino el inmueble correctamente"));
     }
+    
+    @RequestMapping(value = InmuebleURIConstants.GET_INMUEBLES_PAG, 
+            method = RequestMethod.GET,
+            produces = "Application/json")
+    public @ResponseBody List<InmuebleSimpleWrapper> 
+        getInmueblesPaginado(
+                @RequestParam(value="sort") String sort, 
+                @RequestParam(value="search") String search) 
+                throws SystemException {
+        List<InmuebleSimpleWrapper> inmuebles = 
+                ListUtil.getListSimpleInmueble(is.listarPaginado(sort, search));
+        return inmuebles;
+    }
+
 }
