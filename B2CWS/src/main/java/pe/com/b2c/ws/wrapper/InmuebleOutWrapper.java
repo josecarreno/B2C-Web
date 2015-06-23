@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import pe.com.b2c.dao.entity.Imagen;
 import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.ws.util.ListUtil;
 
@@ -51,7 +52,7 @@ public class InmuebleOutWrapper {
     
     private Integer antiguedad;
 
-    private List<ImagenWrapper> imagenList;
+    private List<ImagenSimpleWrapper> imagenList;
 
     public InmuebleOutWrapper(Inmueble i) {
         
@@ -62,7 +63,7 @@ public class InmuebleOutWrapper {
         this.fechaCreacion = i.getFechaCreacion();
         this.idInmueble = i.getIdInmueble();
         this.idUsuario = i.getIdUsuario().getIdUsuario();
-        this.imagenList = ListUtil.getListImagenWrapper(i.getImagenList());
+        this.imagenList = ListUtil.getListImagenSimpleWrapper(i.getImagenList());
         this.latitud = i.getLatitud();
         this.longitud = i.getLongitud();
         this.precio = i.getPrecio();
@@ -192,11 +193,11 @@ public class InmuebleOutWrapper {
         this.tipoInmueble = tipoInmueble;
     }
 
-    public List<ImagenWrapper> getImagenList() {
+    public List<ImagenSimpleWrapper> getImagenList() {
         return imagenList;
     }
 
-    public void setImagenList(List<ImagenWrapper> imagenList) {
+    public void setImagenList(List<ImagenSimpleWrapper> imagenList) {
         this.imagenList = imagenList;
     }
 

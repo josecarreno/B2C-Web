@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pe.com.b2c.dao.entity.Imagen;
 import pe.com.b2c.dao.entity.Inmueble;
+import pe.com.b2c.ws.wrapper.ImagenSimpleWrapper;
 import pe.com.b2c.ws.wrapper.ImagenWrapper;
 import pe.com.b2c.ws.wrapper.InmuebleSimpleWrapper;
 
@@ -24,6 +25,16 @@ public class ListUtil {
                 = new ArrayList<ImagenWrapper>();
         for (Imagen i : listImagen) {
             lstOut.add(new ImagenWrapper(i));
+        }
+        return lstOut;
+    }
+    
+    public static List<ImagenSimpleWrapper> getListImagenSimpleWrapper(List<Imagen> listImagen) {
+        List<ImagenSimpleWrapper> lstOut
+                = new ArrayList<ImagenSimpleWrapper>();
+        for (Imagen i : listImagen) {
+            
+            lstOut.add(new ImagenSimpleWrapper(i.getImgBlob()));
         }
         return lstOut;
     }
