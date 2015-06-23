@@ -2,12 +2,14 @@ package pe.com.b2c.ws.wrapper;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.dao.entity.TipoInmueble;
 import pe.com.b2c.dao.entity.TipoTransaccion;
 import pe.com.b2c.dao.entity.Usuario;
+import pe.com.b2c.ws.util.ListUtil;
 
 public class InmuebleInWrapper {
 
@@ -238,6 +240,10 @@ public class InmuebleInWrapper {
         i.setDormitorios(dormitorios);
         i.setBanos(banos);
         i.setAntiguedad(antiguedad);
+        i.setPrecio(precio);
+        i.setLatitud(latitud);
+        i.setLongitud(longitud);
+        i.setTitulo(titulo);
         
         TipoInmueble ti = new TipoInmueble();
         ti.setIdTipoInmueble(idTipoInmueble);
@@ -251,7 +257,7 @@ public class InmuebleInWrapper {
         u.setIdUsuario(idUsuario);
         i.setIdUsuario(u);
 
-        i.setImagenList(null);
+        i.setImagenList(ListUtil.getListImagen(imagenList));
 
         return i;
     }

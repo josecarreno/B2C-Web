@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import pe.com.b2c.dao.entity.Imagen;
+import pe.com.b2c.dao.entity.Inmueble;
+import pe.com.b2c.service.ImagenService;
 import pe.com.b2c.service.InmuebleService;
 import pe.com.b2c.util.SystemException;
 import pe.com.b2c.ws.constants.InmuebleURIConstants;
@@ -22,6 +25,8 @@ import pe.com.b2c.ws.wrapper.Respuesta;
 public class InmuebleController {
     private final InmuebleService is = 
             (InmuebleService) WSUtil.obtenerService("INMUEBLE");
+    private final ImagenService imgs = 
+            (ImagenService) WSUtil.obtenerService("IMAGEN");
     
     @RequestMapping(value = InmuebleURIConstants.GET_INMUEBLE, 
             method = RequestMethod.GET, 
@@ -48,7 +53,14 @@ public class InmuebleController {
             produces = "Application/json")
     public @ResponseBody
     Respuesta createInmueble(@RequestBody InmuebleInWrapper i) throws SystemException{
-        is.insertar(i.getEntity());
+        Inmueble in = i.getEntity();
+        List<Imagen> imgIn = in.getImagenList();
+        in.setImagenList(null);
+        is.insertar(in);
+        for (Imagen img: imgIn) {
+            img.setIdInmueble(in);
+            imgs.insertar(img);
+        }
         return new Respuesta("Inmueble creado correctamente");
     }
     

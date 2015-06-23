@@ -49,6 +49,5 @@ public class InmuebleServiceImpl implements InmuebleService{
     @Override
     public List<Inmueble> listar() throws SystemException {
         return inmuebleDao.listar();
-    }
-    
+    }  
 }

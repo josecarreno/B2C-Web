@@ -333,5 +333,4 @@ public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {
         }
         return lista;
     }
-
 }

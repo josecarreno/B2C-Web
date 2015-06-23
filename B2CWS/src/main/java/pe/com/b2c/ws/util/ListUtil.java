@@ -1,5 +1,6 @@
 package pe.com.b2c.ws.util;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import pe.com.b2c.dao.entity.Imagen;
@@ -23,6 +24,19 @@ public class ListUtil {
                 = new ArrayList<ImagenWrapper>();
         for (Imagen i : listImagen) {
             lstOut.add(new ImagenWrapper(i));
+        }
+        return lstOut;
+    }
+    
+    public static List<Imagen> 
+        getListImagen(List<ImagenWrapper> listImagenWrapper) {
+        List<Imagen> lstOut
+                = new ArrayList<Imagen>();
+        for (ImagenWrapper i : listImagenWrapper) {
+            Imagen img = new Imagen();
+            img.setEliminado(Boolean.FALSE);
+            img.setImgBlob(i.getImgBlob().getBytes(Charset.forName("UTF-8")));
+            lstOut.add(img);
         }
         return lstOut;
     }

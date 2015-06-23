@@ -4,12 +4,16 @@ import pe.com.b2c.dao.entity.Imagen;
 
 public class ImagenWrapper {
     private Integer idImagen;
-    private byte[] imgBlob;
+    private String imgBlob;
     private Integer idInmueble;
+    
+    public ImagenWrapper(){
+
+    }
 
     public ImagenWrapper(Imagen i) {
         this.idImagen = i.getIdImagen();
-        this.imgBlob = i.getImgBlob();
+        this.imgBlob = new String(i.getImgBlob());
         this.idInmueble = i.getIdInmueble().getIdInmueble();
     }
 
@@ -21,11 +25,11 @@ public class ImagenWrapper {
         this.idImagen = idImagen;
     }
 
-    public byte[] getImgBlob() {
+    public String getImgBlob() {
         return imgBlob;
     }
 
-    public void setImgBlob(byte[] imgBlob) {
+    public void setImgBlob(String imgBlob) {
         this.imgBlob = imgBlob;
     }
 

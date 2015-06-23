@@ -28,7 +28,7 @@ public class ImagenServiceImpl implements ImagenService{
     
     @Override
     public void insertar(Imagen e) throws SystemException {
-        imagenDao.actualizar(e);
+        imagenDao.insertar(e);
     }
 
     @Override

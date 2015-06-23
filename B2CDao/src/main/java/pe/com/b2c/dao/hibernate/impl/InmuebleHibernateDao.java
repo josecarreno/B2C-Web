@@ -1,11 +1,13 @@
 package pe.com.b2c.dao.hibernate.impl;
 
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import pe.com.b2c.dao.InmuebleDao;
 import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.dao.base.BaseHibernateDao;
+import pe.com.b2c.dao.entity.Imagen;
 import pe.com.b2c.util.SystemException;
 
 public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDao{
@@ -31,14 +33,15 @@ public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDa
         Session session = null;
         try {
             session = obtenerSesion();
+            
             e.setEliminado(Boolean.FALSE);
+            e.setFechaCreacion(new Date());
             session.save(e);
             session.getTransaction().commit();
         } finally {
             if(session!=null && session.isOpen()){
                 cerrar(session);
             }
-
         }
     }
 
@@ -102,5 +105,5 @@ public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDa
         }
         return lista;
     }
-    
+   
 }
