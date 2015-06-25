@@ -1,5 +1,6 @@
 package pe.com.b2c.dao.hibernate.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
@@ -7,6 +8,7 @@ import org.hibernate.Session;
 import pe.com.b2c.dao.InmuebleDao;
 import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.dao.base.BaseHibernateDao;
+import pe.com.b2c.dao.entity.Imagen;
 import pe.com.b2c.util.SystemException;
 
 public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDao{
@@ -82,6 +84,12 @@ public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDa
         try {
             session = obtenerSesion();
             inmueble = (Inmueble) session.get(Inmueble.class, id);
+            List<Imagen> aux = new ArrayList<>();
+            for(Imagen i: inmueble.getImagenList()){
+                 if (!aux.contains(i))
+                    aux.add(i);
+            }
+            inmueble.setImagenList(aux);
         } finally {
             if(session!=null && session.isOpen()){
                 cerrar(session);
