@@ -1,4 +1,3 @@
-
 package pe.com.b2c.ws.controller;
 
 import java.util.List;
@@ -24,76 +23,89 @@ import pe.com.b2c.ws.wrapper.Respuesta;
 
 @RestController
 public class InmuebleController {
-    private final InmuebleService is = 
-            (InmuebleService) WSUtil.obtenerService("INMUEBLE");
-    private final ImagenService imgs = 
-            (ImagenService) WSUtil.obtenerService("IMAGEN");
-    
-    @RequestMapping(value = InmuebleURIConstants.GET_INMUEBLE, 
-            method = RequestMethod.GET, 
+
+    private final InmuebleService is
+            = (InmuebleService) WSUtil.obtenerService("INMUEBLE");
+    private final ImagenService imgs
+            = (ImagenService) WSUtil.obtenerService("IMAGEN");
+
+    @RequestMapping(value = InmuebleURIConstants.GET_INMUEBLE,
+            method = RequestMethod.GET,
             produces = "Application/json")
     public @ResponseBody
-    InmuebleOutWrapper getInmueble(@PathVariable("idInmueble") Integer id) 
+    InmuebleOutWrapper getInmueble(@PathVariable("idInmueble") Integer id)
             throws SystemException {
         InmuebleOutWrapper i = new InmuebleOutWrapper(is.obtener(id));
         return i;
     }
-    
-    @RequestMapping(value =InmuebleURIConstants.GET_ALL_INMUEBLE, 
-            method = RequestMethod.GET, 
+
+    @RequestMapping(value = InmuebleURIConstants.GET_ALL_INMUEBLE,
+            method = RequestMethod.GET,
             produces = "Application/json")
     public @ResponseBody
-    List<InmuebleSimpleWrapper> getAllInmuebles() throws SystemException{
-        List<InmuebleSimpleWrapper> inmuebles = 
-                ListUtil.getListSimpleInmueble(is.listar());
+    List<InmuebleSimpleWrapper> getAllInmuebles() throws SystemException {
+        List<InmuebleSimpleWrapper> inmuebles
+                = ListUtil.getListSimpleInmueble(is.listar());
         return inmuebles;
     }
 
-    @RequestMapping(value = InmuebleURIConstants.CREATE_INMUEBLE, 
+    @RequestMapping(value = InmuebleURIConstants.CREATE_INMUEBLE,
             method = RequestMethod.POST,
             produces = "Application/json")
     public @ResponseBody
-    Respuesta createInmueble(@RequestBody InmuebleInWrapper i) throws SystemException{
+    Respuesta createInmueble(@RequestBody InmuebleInWrapper i) throws SystemException {
         Inmueble in = i.getEntity();
         List<Imagen> imgIn = in.getImagenList();
         in.setImagenList(null);
         is.insertar(in);
-        for (Imagen img: imgIn) {
+        for (Imagen img : imgIn) {
             img.setIdInmueble(in);
             imgs.insertar(img);
         }
         Respuesta r = new Respuesta("Inmueble creado correctamente");
         return r;
     }
-    
-    @RequestMapping(value = InmuebleURIConstants.UPDATE_INMUEBLE, 
+
+    @RequestMapping(value = InmuebleURIConstants.UPDATE_INMUEBLE,
             method = RequestMethod.POST,
             produces = "Application/json")
     public @ResponseBody
-    Respuesta updateInmueble(@RequestBody InmuebleInWrapper i) throws SystemException{
+    Respuesta updateInmueble(@RequestBody InmuebleInWrapper i) throws SystemException {
         is.actualizar(i.getEntity());
         return (new Respuesta("Se actualizo el inmueble correctamente"));
     }
-    
-    @RequestMapping(value = InmuebleURIConstants.DELETE_INMUEBLE, 
+
+    @RequestMapping(value = InmuebleURIConstants.DELETE_INMUEBLE,
             method = RequestMethod.POST,
             produces = "Application/json")
     public @ResponseBody
-    Respuesta deleteInmueble(@PathVariable("idInmueble") Integer id) throws SystemException{
+    Respuesta deleteInmueble(@PathVariable("idInmueble") Integer id) throws SystemException {
         is.eliminar(id);
         return (new Respuesta("Se elimino el inmueble correctamente"));
     }
-    
-    @RequestMapping(value = InmuebleURIConstants.GET_INMUEBLES_PAG, 
+
+    @RequestMapping(value = InmuebleURIConstants.BUSCAR_INMUEBLES,
             method = RequestMethod.GET,
             produces = "Application/json")
-    public @ResponseBody List<InmuebleSimpleWrapper> 
-        getInmueblesPaginado(
-                @RequestParam(value="sort") String sort, 
-                @RequestParam(value="search") String search) 
-                throws SystemException {
-        List<InmuebleSimpleWrapper> inmuebles = 
-                ListUtil.getListSimpleInmueble(is.listarPaginado(sort, search));
+    public @ResponseBody
+    List<InmuebleSimpleWrapper>
+            buscarInmueble(
+                    @RequestParam(value = "sort") String sort,
+                    @RequestParam(value = "search") String search)
+            throws SystemException {
+        List<InmuebleSimpleWrapper> inmuebles
+                = ListUtil.getListSimpleInmueble(is.buscarInmueble(sort, search));
+        return inmuebles;
+    }
+
+    @RequestMapping(value = InmuebleURIConstants.INMUEBLES_PROPIOS,
+            method = RequestMethod.GET,
+            produces = "Application/json")
+    public @ResponseBody
+    List<InmuebleSimpleWrapper> getInmueblesPropios(@PathVariable("idUsuario") Integer idUsuario)
+            throws SystemException {
+        List<InmuebleSimpleWrapper> inmuebles
+                = ListUtil.getListSimpleInmueble(is.inmueblesPropios(idUsuario));
         return inmuebles;
     }
 

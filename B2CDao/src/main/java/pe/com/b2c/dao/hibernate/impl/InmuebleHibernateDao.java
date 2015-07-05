@@ -114,7 +114,7 @@ public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDa
     }
 
     @Override
-    public List<Inmueble> listarPaginado(String sort, String search) {
+    public List<Inmueble> buscarInmueble(String sort, String search) {
         Session session = null;
         List<Inmueble> lista = null;
         StringBuilder sb = new StringBuilder();
@@ -138,6 +138,22 @@ public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDa
             String hql = sb.toString();
             Query query = session.createQuery(hql)
                     .setParameter("search", search);
+            lista = query.list();
+        } finally {
+            cerrar(session);
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Inmueble> inmueblesPropios(Integer idUsuario) {
+        Session session = null;
+        List<Inmueble> lista = null;
+        try {
+            session = obtenerSesion();
+            String hql = "SELECT i FROM Inmueble i WHERE i.eliminado = 0 "
+                    + "AND i.idUsuario.idUsuario = :idUsuario";
+            Query query = session.createQuery(hql).setInteger("idUsuario", idUsuario);
             lista = query.list();
         } finally {
             cerrar(session);

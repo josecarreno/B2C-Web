@@ -52,7 +52,12 @@ public class InmuebleServiceImpl implements InmuebleService{
     }  
 
     @Override
-    public List<Inmueble> listarPaginado(String sort, String search) {
-        return inmuebleDao.listarPaginado(sort, search);
+    public List<Inmueble> buscarInmueble(String sort, String search) {
+        return inmuebleDao.buscarInmueble(sort, search);
+    }
+
+    @Override
+    public List<Inmueble> inmueblesPropios(Integer idUsuario) {
+        return inmuebleDao.inmueblesPropios(idUsuario);
     }
 }
