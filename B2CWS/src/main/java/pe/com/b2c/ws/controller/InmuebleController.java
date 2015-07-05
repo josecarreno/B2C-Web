@@ -62,7 +62,8 @@ public class InmuebleController {
             img.setIdInmueble(in);
             imgs.insertar(img);
         }
-        return new Respuesta("Inmueble creado correctamente");
+        Respuesta r = new Respuesta("Inmueble creado correctamente");
+        return r;
     }
     
     @RequestMapping(value = InmuebleURIConstants.UPDATE_INMUEBLE, 

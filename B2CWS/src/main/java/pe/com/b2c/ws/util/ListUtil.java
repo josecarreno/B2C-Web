@@ -3,6 +3,7 @@ package pe.com.b2c.ws.util;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.tomcat.util.codec.binary.Base64;
 import pe.com.b2c.dao.entity.Imagen;
 import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.ws.wrapper.ImagenSimpleWrapper;
@@ -46,7 +47,8 @@ public class ListUtil {
         for (ImagenWrapper i : listImagenWrapper) {
             Imagen img = new Imagen();
             img.setEliminado(Boolean.FALSE);
-            img.setImgBlob(i.getImgBlob().getBytes(Charset.forName("UTF-8")));
+            byte[] decodedString = Base64.decodeBase64(i.getImgBlob());
+            img.setImgBlob(decodedString);
             lstOut.add(img);
         }
         return lstOut;

@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 public class Respuesta {
     private String mensaje;
 
+    public Respuesta() {
+    }
+
     public Respuesta(String mensaje) {
         this.mensaje = mensaje;
     }
