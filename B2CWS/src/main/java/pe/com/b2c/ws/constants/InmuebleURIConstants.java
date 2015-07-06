@@ -9,5 +9,5 @@ public class InmuebleURIConstants {
 	public static final String CREATE_INMUEBLE = "/inmueble/create";
         public static final String UPDATE_INMUEBLE = "/inmueble/update";
 	public static final String DELETE_INMUEBLE = "/inmueble/delete/{idInmueble}";
-        
+        public static final String INMUEBLE_RADIO = "/inmueble/radio";
 }

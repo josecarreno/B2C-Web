@@ -16,6 +16,8 @@ public class InmuebleSimpleWrapper {
     private String tipoTransaccion;
     private Date fecha;
     private BigInteger favoritos;
+    private BigDecimal latidud;
+    private BigDecimal longitud;
 
     public InmuebleSimpleWrapper() {
     }
@@ -29,6 +31,8 @@ public class InmuebleSimpleWrapper {
         this.tipoTransaccion = i.getIdTipoTransaccion().getDescripcion();
         this.fecha = i.getFechaCreacion();
         this.favoritos = i.getCantidadFavoritos();
+        this.latidud = i.getLatitud();
+        this.longitud = i.getLongitud();
     }
     
     public Integer getId() {
@@ -93,6 +97,22 @@ public class InmuebleSimpleWrapper {
 
     public void setFavoritos(BigInteger favoritos) {
         this.favoritos = favoritos;
+    }
+
+    public BigDecimal getLatidud() {
+        return latidud;
+    }
+
+    public void setLatidud(BigDecimal latidud) {
+        this.latidud = latidud;
+    }
+
+    public BigDecimal getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(BigDecimal longitud) {
+        this.longitud = longitud;
     }
     
 }

@@ -1,5 +1,6 @@
 package pe.com.b2c.dao.jdbc.impl;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -341,6 +342,11 @@ public class InmuebleJdbcDao extends BaseJdbcDao implements InmuebleDao {
 
     @Override
     public List<Inmueble> inmueblesPropios(Integer idUsuario) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Inmueble> inmueblesEnRadio(BigDecimal lat, BigDecimal lon, BigDecimal radio) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

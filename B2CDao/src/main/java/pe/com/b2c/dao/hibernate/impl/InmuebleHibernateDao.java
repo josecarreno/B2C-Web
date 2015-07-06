@@ -1,5 +1,6 @@
 package pe.com.b2c.dao.hibernate.impl;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +12,7 @@ import pe.com.b2c.dao.entity.Inmueble;
 import pe.com.b2c.dao.base.BaseHibernateDao;
 import pe.com.b2c.dao.entity.Imagen;
 import pe.com.b2c.util.SystemException;
+import pe.com.b2c.util.SystemUtil;
 
 public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDao{
 
@@ -157,6 +159,40 @@ public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDa
                     + "AND i.idUsuario.idUsuario = :idUsuario";
             Query query = session.createQuery(hql).setInteger("idUsuario", idUsuario);
             lista = query.list();
+        } finally {
+            cerrar(session);
+        }
+        return lista;
+    }
+
+    @Override
+    public List<Inmueble> inmueblesEnRadio(
+            BigDecimal lat, BigDecimal lon, BigDecimal radio) {
+       
+        Session session = null;
+        List<Inmueble> lista = null;
+        List<Inmueble> aux = null;
+        try {
+            session = obtenerSesion();
+            String hql = "SELECT i FROM Inmueble i WHERE i.eliminado = 0";
+            Query query = session.createQuery(hql);
+            aux = query.list();
+            lista = new ArrayList<>();
+            Double latCentro = lat.doubleValue(); 
+            Double lonCentro = lon.doubleValue();  
+            Double radioP = radio.doubleValue();
+            for(Inmueble i : aux) {
+                Double latPrueba = i.getLatitud().doubleValue(); 
+                Double lonPrueba = i.getLongitud().doubleValue();
+                if (SystemUtil.estaEnRadio(
+                                latCentro, 
+                                lonCentro, 
+                                latPrueba, 
+                                lonPrueba, 
+                                radioP)) {
+                    lista.add(i);
+                }
+            }
         } finally {
             cerrar(session);
         }

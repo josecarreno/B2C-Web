@@ -1,5 +1,6 @@
 package pe.com.b2c.ws.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -106,6 +107,22 @@ public class InmuebleController {
             throws SystemException {
         List<InmuebleSimpleWrapper> inmuebles
                 = ListUtil.getListSimpleInmueble(is.inmueblesPropios(idUsuario));
+        return inmuebles;
+    }
+    
+    @RequestMapping(value = InmuebleURIConstants.INMUEBLE_RADIO,
+            method = RequestMethod.GET,
+            produces = "Application/json")
+    public @ResponseBody
+    List<InmuebleSimpleWrapper>
+            inmueblesEnRadio(
+                    @RequestParam(value = "lat") BigDecimal lat,
+                    @RequestParam(value = "lon") BigDecimal lon,
+                    @RequestParam(value = "radio") BigDecimal radio)
+            throws SystemException {
+        List<InmuebleSimpleWrapper> inmuebles
+                = ListUtil.getListSimpleInmueble(
+                        is.inmueblesEnRadio(lat, lon, radio));
         return inmuebles;
     }
 

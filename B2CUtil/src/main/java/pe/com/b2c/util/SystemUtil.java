@@ -1,5 +1,6 @@
 package pe.com.b2c.util;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -35,5 +36,15 @@ public class SystemUtil {
         return texto == null ? "" : texto;
     }
     
-    
+    public static Boolean estaEnRadio(Double latCentro, Double lonCentro, Double latPrueba, Double lonPrueba, Double radio) {
+        //Fumada
+        Double latcr = latCentro * Math.PI /180; 
+        Double loncr = lonCentro * Math.PI /180;  
+        Double latpr = latPrueba * Math.PI /180;  
+        Double lonpr = lonPrueba * Math.PI /180; 
+        Double distancia =  Math.acos(Math.sin(latcr) * Math.sin(latpr) + 
+                Math.cos(latcr) * Math.cos(latpr) * Math.cos(loncr - lonpr)) 
+                * 6371 * 1000;
+        return radio >= distancia;
+    }
 }

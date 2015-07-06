@@ -1,5 +1,6 @@
 package pe.com.b2c.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 import pe.com.b2c.dao.InmuebleDao;
 import pe.com.b2c.dao.entity.Inmueble;
@@ -59,5 +60,10 @@ public class InmuebleServiceImpl implements InmuebleService{
     @Override
     public List<Inmueble> inmueblesPropios(Integer idUsuario) {
         return inmuebleDao.inmueblesPropios(idUsuario);
+    }
+
+    @Override
+    public List<Inmueble> inmueblesEnRadio(BigDecimal lat, BigDecimal lon, BigDecimal radio) {
+        return inmuebleDao.inmueblesEnRadio(lat, lon, radio);
     }
 }
