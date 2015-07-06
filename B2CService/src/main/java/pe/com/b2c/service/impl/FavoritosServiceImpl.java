@@ -66,5 +66,10 @@ public class FavoritosServiceImpl implements FavoritosService{
     public List<Inmueble> listarFavoritosUsuario(Integer idUsuario) throws SystemException {
        return favoritosDao.listarFavoritosUsuario(idUsuario);
     }
+
+    @Override
+    public Boolean estaEnFavoritos(Integer idUsuario, Integer idInmueble) throws SystemException {
+        return favoritosDao.estaEnFavoritos(idUsuario, idInmueble);
+    }
     
 }

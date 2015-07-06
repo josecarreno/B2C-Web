@@ -328,6 +328,11 @@ public class FavoritosJdbcDao extends BaseJdbcDao implements FavoritosDao{
         return lstImg;
     }
 
+    @Override
+    public Boolean estaEnFavoritos(Integer idUsuario, Integer idInmueble) throws SystemException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
    
     
 }

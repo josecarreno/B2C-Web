@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import pe.com.b2c.dao.entity.Inmueble;
@@ -13,6 +14,7 @@ import pe.com.b2c.util.SystemException;
 import pe.com.b2c.ws.constants.FavoritosURIConstants;
 import pe.com.b2c.ws.util.ListUtil;
 import pe.com.b2c.ws.util.WSUtil;
+import pe.com.b2c.ws.wrapper.EstaEnFavoritosWrapper;
 import pe.com.b2c.ws.wrapper.FavoritosWrapper;
 import pe.com.b2c.ws.wrapper.InmuebleSimpleWrapper;
 import pe.com.b2c.ws.wrapper.Respuesta;
@@ -46,5 +48,19 @@ public class FavoritosController {
     List<InmuebleSimpleWrapper> getFavoritos(@PathVariable("idUsuario") Integer id) throws SystemException{
         List<Inmueble> inmuebles = fs.listarFavoritosUsuario(id);
         return ListUtil.getListSimpleInmueble(inmuebles);
+    }
+    
+    @RequestMapping(value = FavoritosURIConstants.ES_FAVORITO,
+            method = RequestMethod.GET,
+            produces = "Application/json")
+    public @ResponseBody
+    EstaEnFavoritosWrapper
+            esFavorito(
+                    @RequestParam(value = "idUsuario") Integer idUsuario,
+                    @RequestParam(value = "idInmueble") Integer idInmueble)
+            throws SystemException {
+        EstaEnFavoritosWrapper ef = new EstaEnFavoritosWrapper();
+        ef.setValor(fs.estaEnFavoritos(idUsuario, idInmueble));
+        return ef;
     }
 }

@@ -112,33 +112,79 @@ public class FavoritosHibernateDao extends BaseHibernateDao implements Favoritos
     @Override
     public void agregarInmuebleAFavoritos(Integer idUsuario, Integer idInmueble) throws SystemException {
         Session session = null;
+        List<Favoritos> listaFavoritos = null;
+        List<Inmueble> listaInmuebles = null;
         try {
             session = obtenerSesion();
-            Favoritos f = new Favoritos();
-            f.setEliminado(Boolean.FALSE);
-            
+            String hqlFavoritos = "SELECT f FROM Favoritos f "
+                    + "WHERE f.idUsuario.idUsuario = :idUsuario "
+                    + "AND f.idInmueble.idInmueble = :idInmueble";
+            Query queryFavoritos = session.createQuery(hqlFavoritos)
+                    .setInteger("idUsuario", idUsuario)
+                    .setInteger("idInmueble", idInmueble);
+            listaFavoritos = queryFavoritos.list();
+            if (listaFavoritos.size() > 0) {
+                Favoritos f = listaFavoritos.get(0);
+                f.setEliminado(Boolean.FALSE);
+                f.setFechaCreacion(new Date());
+                session.update(f);
+            } else {
+                Favoritos f = new Favoritos();
+                f.setEliminado(Boolean.FALSE);
 
-            Usuario u = new Usuario();
-            u.setIdUsuario(idUsuario);
+                Usuario u = new Usuario();
+                u.setIdUsuario(idUsuario);
 
-            Inmueble i = new Inmueble();
-            i.setIdInmueble(idInmueble);
+                Inmueble i = new Inmueble();
+                i.setIdInmueble(idInmueble);
 
-            f.setIdUsuario(u);
-            f.setIdInmueble(i);
-            f.setFechaCreacion(new Date());
-            
-            session.save(f);
-            
-            Inmueble inmuebleAActualizar = 
-                    (Inmueble) session.get(Inmueble.class, idInmueble);
-            inmuebleAActualizar.setCantidadFavoritos(
-                    inmuebleAActualizar
-                            .getCantidadFavoritos()
-                            .add(BigInteger.ONE));
-            session.update(inmuebleAActualizar);
+                f.setIdUsuario(u);
+                f.setIdInmueble(i);
+                f.setFechaCreacion(new Date());
+
+                session.save(f);
+            }
+
+            String hqlInmuebles = "SELECT i FROM Inmueble i "
+                    + "WHERE i.idInmueble = :idInmueble";
+            Query queryInmuebles = session.createQuery(hqlInmuebles)
+                    .setInteger("idInmueble", idInmueble);
+            listaInmuebles = queryInmuebles.list();
+            Inmueble i = listaInmuebles.get(0);
+            i.setCantidadFavoritos(i.getCantidadFavoritos()
+                    .add(BigInteger.ONE));
+            session.update(i);
+            session.save(i);
             
             session.getTransaction().commit();
+
+            /*
+             session = obtenerSesion();
+             Favoritos f = new Favoritos();
+             f.setEliminado(Boolean.FALSE);
+
+             Usuario u = new Usuario();
+             u.setIdUsuario(idUsuario);
+
+             Inmueble i = new Inmueble();
+             i.setIdInmueble(idInmueble);
+
+             f.setIdUsuario(u);
+             f.setIdInmueble(i);
+             f.setFechaCreacion(new Date());
+
+             session.save(f);
+
+             Inmueble inmuebleAActualizar
+             = (Inmueble) session.get(Inmueble.class, idInmueble);
+             inmuebleAActualizar.setCantidadFavoritos(
+             inmuebleAActualizar
+             .getCantidadFavoritos()
+             .add(BigInteger.ONE));
+             session.update(inmuebleAActualizar);
+
+             session.getTransaction().commit();
+             */
         } finally {
             if (session != null && session.isOpen()) {
                 cerrar(session);
@@ -156,8 +202,9 @@ public class FavoritosHibernateDao extends BaseHibernateDao implements Favoritos
             usuario = (Usuario) session.get(Usuario.class, idUsuario);
             lista = new ArrayList<>();
             for (Favoritos f : usuario.getFavoritosList()) {
-                if (!lista.contains(f.getIdInmueble()))
+                if (!lista.contains(f.getIdInmueble()) && !f.getEliminado()) {
                     lista.add(f.getIdInmueble());
+                }
             }
 
         } finally {
@@ -171,37 +218,31 @@ public class FavoritosHibernateDao extends BaseHibernateDao implements Favoritos
     @Override
     public void eliminarFavorito(Integer idUsuario, Integer idInmueble) throws SystemException {
         Session session = null;
+        List<Favoritos> listaFavoritos = null;
+        List<Inmueble> listaInmuebles = null;
         try {
             session = obtenerSesion();
-            Favoritos favoritoABuscar = new Favoritos();
+            String hqlFavoritos = "SELECT f FROM Favoritos f "
+                    + "WHERE f.idUsuario.idUsuario = :idUsuario "
+                    + "AND f.idInmueble.idInmueble = :idInmueble";
+            Query queryFavoritos = session.createQuery(hqlFavoritos)
+                    .setInteger("idUsuario", idUsuario)
+                    .setInteger("idInmueble", idInmueble);
+            listaFavoritos = queryFavoritos.list();
+            Favoritos f = listaFavoritos.get(0);
+            f.setEliminado(Boolean.TRUE);
+            session.save(f);
 
-            Inmueble i = new Inmueble();
-            i.setIdInmueble(idInmueble);
-            favoritoABuscar.setIdInmueble(i);
-
-            Usuario u = new Usuario();
-            u.setIdUsuario(idUsuario);
-            favoritoABuscar.setIdFavoritos(idUsuario);
-
-            Favoritos favoritoObtenido = (Favoritos) session.
-                    createCriteria(Favoritos.class)
-                    .add(Example
-                            .create(favoritoABuscar)
-                            .ignoreCase()
-                            .enableLike(MatchMode.ANYWHERE))
-                    .uniqueResult();
-
-            favoritoObtenido.setEliminado(Boolean.TRUE);
-            session.update(favoritoObtenido);
-
-            Inmueble inmuebleAActualizar = 
-                    (Inmueble) session.get(Inmueble.class, idInmueble);
-            inmuebleAActualizar.setCantidadFavoritos(
-                    inmuebleAActualizar
-                            .getCantidadFavoritos()
-                            .subtract(BigInteger.ONE));
-            session.update(inmuebleAActualizar);
-            
+            String hqlInmuebles = "SELECT i FROM Inmueble i "
+                    + "WHERE i.idInmueble = :idInmueble";
+            Query queryInmuebles = session.createQuery(hqlInmuebles)
+                    .setInteger("idInmueble", idInmueble);
+            listaInmuebles = queryInmuebles.list();
+            Inmueble i = listaInmuebles.get(0);
+            i.setCantidadFavoritos(i.getCantidadFavoritos()
+                    .subtract(BigInteger.ONE));
+            session.update(i);
+            session.save(i);
             session.getTransaction().commit();
 
         } finally {
@@ -209,6 +250,30 @@ public class FavoritosHibernateDao extends BaseHibernateDao implements Favoritos
                 cerrar(session);
             }
         }
+    }
+
+    @Override
+    public Boolean estaEnFavoritos(Integer idUsuario, Integer idInmueble) throws SystemException {
+        Session session = null;
+        List<Favoritos> lista = null;
+        try {
+            session = obtenerSesion();
+            String hql = "SELECT f FROM Favoritos f WHERE f.eliminado = 0 "
+                    + "AND f.idUsuario = :idUsuario "
+                    + "AND f.idInmueble = :idInmueble";
+            Query query = session.createQuery(hql)
+                    .setInteger("idUsuario", idUsuario)
+                    .setInteger("idInmueble", idInmueble);
+            lista = query.list();
+            if (!lista.isEmpty()) {
+                return true;
+            }
+        } finally {
+            if (session != null && session.isOpen()) {
+                cerrar(session);
+            }
+        }
+        return false;
     }
 
 }

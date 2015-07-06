@@ -13,8 +13,6 @@ public interface FavoritosDao extends EntityDao<Favoritos, Integer>{
     void agregarInmuebleAFavoritos(Integer idUsuario, Integer idInmueble) throws SystemException;
     List<Inmueble> listarFavoritosUsuario(Integer idUsuario) throws SystemException;
     void eliminarFavorito(Integer idUsuario, Integer idInmueble) throws SystemException;
-    
-    
-    
+    public Boolean estaEnFavoritos(Integer idUsuario, Integer idInmueble) throws SystemException;
     
 }
