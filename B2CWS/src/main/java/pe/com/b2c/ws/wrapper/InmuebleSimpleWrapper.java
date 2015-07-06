@@ -2,6 +2,8 @@ package pe.com.b2c.ws.wrapper;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
 import pe.com.b2c.dao.entity.Inmueble;
 
 @JsonAutoDetect
@@ -12,6 +14,11 @@ public class InmuebleSimpleWrapper {
     private BigDecimal precio;
     private byte[] imagen;
     private String tipoTransaccion;
+    private Date fecha;
+    private BigInteger favoritos;
+
+    public InmuebleSimpleWrapper() {
+    }
 
     public InmuebleSimpleWrapper(Inmueble i) {
         this.id = i.getIdInmueble();
@@ -20,7 +27,10 @@ public class InmuebleSimpleWrapper {
         this.precio = i.getPrecio();
         this.imagen = i.getImagenList().get(0).getImgBlob();
         this.tipoTransaccion = i.getIdTipoTransaccion().getDescripcion();
+        this.fecha = i.getFechaCreacion();
+        this.favoritos = i.getCantidadFavoritos();
     }
+    
     public Integer getId() {
         return id;
     }
@@ -67,6 +77,22 @@ public class InmuebleSimpleWrapper {
 
     public void setTipoTransaccion(String tipoTransaccion) {
         this.tipoTransaccion = tipoTransaccion;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public BigInteger getFavoritos() {
+        return favoritos;
+    }
+
+    public void setFavoritos(BigInteger favoritos) {
+        this.favoritos = favoritos;
     }
     
 }

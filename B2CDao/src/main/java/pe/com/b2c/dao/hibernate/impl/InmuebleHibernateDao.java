@@ -1,5 +1,6 @@
 package pe.com.b2c.dao.hibernate.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +38,7 @@ public class InmuebleHibernateDao extends BaseHibernateDao implements InmuebleDa
             
             e.setEliminado(Boolean.FALSE);
             e.setFechaCreacion(new Date());
+            e.setCantidadFavoritos(BigInteger.ZERO);
             session.save(e);
             session.getTransaction().commit();
         } finally {

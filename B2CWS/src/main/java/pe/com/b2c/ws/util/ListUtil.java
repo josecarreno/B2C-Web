@@ -1,6 +1,5 @@
 package pe.com.b2c.ws.util;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.tomcat.util.codec.binary.Base64;
